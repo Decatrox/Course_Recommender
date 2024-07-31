@@ -5,10 +5,10 @@ import java.util.List;
 
 public class CourseRecommenderBad implements CourseRecommender {
     @Override
-    public List<Course> recommendedCourses() {
-        List<Course> courses = new ArrayList<Course>();
-        courses.add(new Course("Circuits", "Seems fun but isn't", 4, "Someone"));
-        courses.add(new Course("Signals", "Why?", 4, "Another One"));
+    public List<Course_old> recommendedCourses() {
+        List<Course_old> courses = new ArrayList<Course_old>();
+        courses.add(new Course_old("Circuits", "Seems fun but isn't", 4, "Someone"));
+        courses.add(new Course_old("Signals", "Why?", 4, "Another One"));
         return courses;
 
     }

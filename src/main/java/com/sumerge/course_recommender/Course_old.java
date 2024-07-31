@@ -1,12 +1,12 @@
 package com.sumerge.course_recommender;
 
-public class Course {
+public class Course_old {
     private String course_name;
     private String course_description;
     private int course_credits;
     private String course_professor;
 
-    public Course(String course_name, String course_description, int course_credits, String course_professor) {
+    public Course_old(String course_name, String course_description, int course_credits, String course_professor) {
         this.course_name = course_name;
         this.course_description = course_description;
         this.course_credits = course_credits;

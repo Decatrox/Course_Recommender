@@ -10,10 +10,10 @@ import java.util.List;
 @Component
 public class CourseRecommenderFun implements CourseRecommender {
     @Override
-    public List<Course> recommendedCourses() {
-        List<Course> courses = new ArrayList<Course>();
-        courses.add(new Course("HCI", "Fun Course, AR Project", 4, "Wael Abouelsaadat"));
-        courses.add(new Course("Optimization", "Fun Algorithms", 4, "Omar Shehata"));
+    public List<Course_old> recommendedCourses() {
+        List<Course_old> courses = new ArrayList<Course_old>();
+        courses.add(new Course_old("HCI", "Fun Course, AR Project", 4, "Wael Abouelsaadat"));
+        courses.add(new Course_old("Optimization", "Fun Algorithms", 4, "Omar Shehata"));
         return courses;
 
     }

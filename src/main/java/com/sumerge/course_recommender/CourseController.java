@@ -15,7 +15,7 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping("/recommend")
-    public List<Course> recommendCourse() {
+    public List<Course_old> recommendCourse() {
         return courseService.getRecommendedCourses();
     }
 }
