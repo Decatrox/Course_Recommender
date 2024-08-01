@@ -28,7 +28,7 @@ public class CourseService {
         this.courseRecommender = courseRecommender;
     }
 
-    List<Course_old> getRecommendedCourses() {
+    public List<Course_old> getRecommendedCourses() {
 //        return courseRecommender.recommendedCourses();
         return courseRecommenderFun.recommendedCourses();
     }

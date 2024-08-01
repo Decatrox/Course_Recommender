@@ -17,6 +17,10 @@ public class Course {
     private List<Rating> ratings;
     private List<Author> authors;
 
+    public Course() {
+        this.id = UUID.randomUUID();
+    }
+
     public UUID getId() {
         return id;
     }
