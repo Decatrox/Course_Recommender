@@ -24,25 +24,25 @@ public class CourseController {
     }
 
     @GetMapping("/recommend")
-    public ResponseEntity<List<Course_old>> recommendCourse() {
+    public ResponseEntity<List<Course>> recommendCourse() {
         return ResponseEntity.ok(courseService.getRecommendedCourses());
     }
 
     @GetMapping("/view")
-    public ResponseEntity<String> viewCourse(@RequestParam("id") UUID id) {
+    public ResponseEntity<Course> viewCourse(@RequestParam("id") UUID id) {
         return ResponseEntity.ok(courseService.viewCourse(id));
     }
 
     @PutMapping("/update/{id}")
     public String updateCourse(@PathVariable UUID id, @RequestBody Course course) {
-        String old = courseService.viewCourse(id);
+        String old = courseService.viewCourse(id).toString();
         courseService.updateCourse(id, course);
         return "changed " + old + " \nto " + course.toString();
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteCourse(@PathVariable UUID id) {
-        String details = courseService.viewCourse(id);
+        String details = courseService.viewCourse(id).toString();
         try{
         courseService.deleteCourse(id);
         return "Deleted course: " + details;
