@@ -1,13 +1,11 @@
 package com.sumerge.course_recommender;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Primary
-@Component
+//@Component("funRecommender")
 public class CourseRecommenderFun implements CourseRecommender {
     @Override
     public List<Course> recommendedCourses() {

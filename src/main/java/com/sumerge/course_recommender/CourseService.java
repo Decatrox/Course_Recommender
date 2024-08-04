@@ -8,23 +8,27 @@ import java.util.List;
 
 @Service//@Component
 public class CourseService {
+    private CourseRecommender courseRecommender;
+    //need just 1 autowired. this is just for the task.
 
-    CourseRecommender courseRecommender;
-    @Autowired
-    private CourseRecommender courseRecommenderFun;
-
-    @Autowired
-    public CourseService(@Qualifier("courseRecommenderFun") CourseRecommender courseRecommender) {
+//    @Autowired
+//    public CourseService(@Qualifier("badRecommender") CourseRecommender courseRecommender) {
+    public CourseService(CourseRecommender courseRecommender) {
         this.courseRecommender = courseRecommender;
     }
 
-    @Autowired
-    public void setCourseRecommender(CourseRecommender courseRecommender) {
-        this.courseRecommender = courseRecommender;
+    public CourseService() {
+        System.out.println("In constructor");
     }
+
+//    @Autowired
+//    @Qualifier("badRecommender")
+//    public void setCourseRecommender(CourseRecommender courseRecommender) {
+//        this.courseRecommender = courseRecommender;
+//    }
 
     List<Course> getRecommendedCourses() {
 //        return courseRecommender.recommendedCourses();
-        return courseRecommenderFun.recommendedCourses();
+        return courseRecommender.recommendedCourses();
     }
 }

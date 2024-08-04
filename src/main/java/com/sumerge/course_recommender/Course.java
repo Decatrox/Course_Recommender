@@ -45,5 +45,13 @@ public class Course {
         this.course_professor = course_professor;
     }
 
-
+    @Override
+    public String toString() {
+        return "Course{" +
+                "course_name='" + course_name + '\'' +
+                ", course_description='" + course_description + '\'' +
+                ", course_credits=" + course_credits +
+                ", course_professor='" + course_professor + '\'' +
+                '}';
+    }
 }

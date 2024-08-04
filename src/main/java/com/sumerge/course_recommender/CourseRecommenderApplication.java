@@ -1,15 +1,15 @@
 package com.sumerge.course_recommender;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import com.sumerge.course_recommender.config.AppConfig;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class CourseRecommenderApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CourseRecommenderApplication.class, args);
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        CourseService courseService = context.getBean(CourseService.class);
+        System.out.println(courseService.getRecommendedCourses().get(0).toString());
     }
 
 }
