@@ -23,9 +23,9 @@ public class CourseRepository {
         jdbcTemplate.update(sql, course.getName(), course.getDescription(), course.getCredit(), course_id);
     }
 
-    public String viewCourse(UUID course_id) {
+    public Course viewCourse(UUID course_id) {
         String sql = "select * from course where id = ?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Course>(Course.class), course_id).toString();
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Course>(Course.class), course_id).getFirst();
     }
 
     public void deleteCourse(UUID course_id) {

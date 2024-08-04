@@ -13,24 +13,17 @@ import java.util.UUID;
 public class CourseService {
 
     CourseRecommender courseRecommender;
-    @Autowired
-    private CourseRecommender courseRecommenderFun;
-    @Autowired
+
     private CourseRepository courseRepository;
 
     @Autowired
-    public CourseService(@Qualifier("courseRecommenderFun") CourseRecommender courseRecommender) {
+    public CourseService(@Qualifier("courseRecommenderFun") CourseRecommender courseRecommender, CourseRepository courseRepository) {
         this.courseRecommender = courseRecommender;
+        this.courseRepository = courseRepository;
     }
 
-    @Autowired
-    public void setCourseRecommender(CourseRecommender courseRecommender) {
-        this.courseRecommender = courseRecommender;
-    }
-
-    public List<Course_old> getRecommendedCourses() {
-//        return courseRecommender.recommendedCourses();
-        return courseRecommenderFun.recommendedCourses();
+    public List<Course> getRecommendedCourses() {
+        return courseRecommender.recommendedCourses();
     }
 
     public void addCourse(Course course){
@@ -41,7 +34,7 @@ public class CourseService {
         courseRepository.updateCourse(course_id, course);
     }
 
-    public String viewCourse(UUID course_id){
+    public Course viewCourse(UUID course_id){
         return courseRepository.viewCourse(course_id);
     }
 
