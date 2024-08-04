@@ -23,7 +23,7 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/recommend")
+    @GetMapping("/discover")
     public ResponseEntity<List<Course>> recommendCourse() {
         return ResponseEntity.ok(courseService.getRecommendedCourses());
     }
