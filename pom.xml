@@ -51,6 +51,11 @@
             <version>5.3.23</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sumerge</groupId>
+            <artifactId>AdvancedBeanSubProject</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
 
     </dependencies>
