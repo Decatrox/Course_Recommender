@@ -1,12 +1,9 @@
 package com.sumerge.course_recommender.course;
 
-import com.sumerge.course_recommender.mapper.MapStructMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 
@@ -14,11 +11,8 @@ import java.util.UUID;
 @RequestMapping("/courses")
 public class CourseController {
 
-//    @Autowired
     private final CourseService courseService;
 
-
-//    @Autowired
     public CourseController (CourseService courseService) {
         this.courseService = courseService;
     }

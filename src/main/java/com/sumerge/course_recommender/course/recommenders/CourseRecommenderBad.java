@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class CourseRecommenderBad implements CourseRecommender {
     private final CourseRepository courseRepository;
 
-//    @Autowired
     public CourseRecommenderBad(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
@@ -20,5 +19,4 @@ public class CourseRecommenderBad implements CourseRecommender {
     public Page<Course> recommendedCourses(int pageNumber) {
         return courseRepository.findAll(PageRequest.of(pageNumber, 3));
     }
-
 }

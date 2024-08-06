@@ -12,8 +12,7 @@ import lombok.ToString;
 import java.util.List;
 import java.util.UUID;
 
-//@Component
-//@Scope("prototype")
+
 @Entity
 @Getter @Setter @ToString
 public class Course {
@@ -22,8 +21,13 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column
     private String name;
+
+    @Column
     private String description;
+
+    @Column
     private int credit;
 
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
@@ -37,10 +41,5 @@ public class Course {
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Assessment assessment;
-
-//    public Course() {
-//        this.id = UUID.randomUUID();
-//    }
-
 
 }

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class CourseRecommenderFun implements CourseRecommender {
     private final CourseRepository courseRepository;
 
-//    @Autowired
     public CourseRecommenderFun(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
@@ -22,7 +21,5 @@ public class CourseRecommenderFun implements CourseRecommender {
     @Override
     public Page<Course> recommendedCourses(int pageNumber) {
             return courseRepository.findAll(PageRequest.of(pageNumber, 2));
-
-//            return courseRepository.findAll().subList(0, 2);
         }
 }
