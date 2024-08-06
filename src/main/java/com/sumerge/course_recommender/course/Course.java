@@ -4,6 +4,7 @@ import com.sumerge.course_recommender.assessment.Assessment;
 import com.sumerge.course_recommender.author.Author;
 import com.sumerge.course_recommender.rating.Rating;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,6 +23,8 @@ public class Course {
     private UUID id;
 
     @Column
+//    @NotBlank(message = "Name is required")
+//    will check later. need to handle when validation fails but it works.
     private String name;
 
     @Column

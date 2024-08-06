@@ -17,4 +17,13 @@ public class CourseGetDTO {
 
     @JsonProperty("credit")
     private int credit;
+
+    @Override
+    public String toString() {
+        return "CourseGetDTO{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", credit=" + credit +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.author;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +19,7 @@ public class AuthorController {
     }
 
     @GetMapping("/GetByEmail")
-    public Author getAuthorByEmail(@RequestParam String email) {
-        return authorService.getAuthorByEmail(email);
+    public ResponseEntity<AuthorGetDTO> getAuthorByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(authorService.getAuthorByEmail(email));
     }
 }
