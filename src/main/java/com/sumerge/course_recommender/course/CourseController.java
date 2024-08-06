@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.course;
 
+import com.sumerge.course_recommender.mapper.MapStructMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ public class CourseController {
 //    @Autowired
     private final CourseService courseService;
 
+
 //    @Autowired
     public CourseController (CourseService courseService) {
         this.courseService = courseService;
@@ -27,7 +29,7 @@ public class CourseController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<Course> viewCourse(@RequestParam("id") UUID id) {
+    public ResponseEntity<CourseGetDTO> viewCourse(@RequestParam("id") UUID id) {
         return ResponseEntity.ok(courseService.viewCourse(id));
     }
 

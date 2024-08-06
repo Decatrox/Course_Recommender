@@ -1,33 +1,9 @@
 package com.sumerge.course_recommender.author;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
-@Repository
-public class AuthorRepository {
 
-    private JdbcTemplate jdbcTemplate;
-
-    public void addAuthor(Author author) {
-        String sql = "insert into authors values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, author.getId(), author.getName(), author.getEmail(), author.getBirthdate());
-    }
-
-    public Author getAuthor(UUID author_id) {
-        String sql = "select * from authors where id = ?";
-        return (Author)jdbcTemplate.query(sql, new BeanPropertyRowMapper<Author>(Author.class), author_id).toArray()[0];
-    }
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
-//    @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+public interface AuthorRepository extends JpaRepository<Author, UUID> {
+    Author findByEmail(String email);
 }
