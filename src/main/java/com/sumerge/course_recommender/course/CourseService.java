@@ -2,6 +2,7 @@ package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -47,12 +48,9 @@ public class CourseService {
     }
 
     public void deleteCourse(UUID course_id){
-        if (courseRepository.existsById(course_id)){
             courseRepository.deleteById(course_id);
-        }
-//        else{
-//            throw
-//        }
+
+
     }
 
 }

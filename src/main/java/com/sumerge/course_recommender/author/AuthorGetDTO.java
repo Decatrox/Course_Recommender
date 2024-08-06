@@ -3,10 +3,11 @@ package com.sumerge.course_recommender.author;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class AuthorGetDTO {
 
     @JsonProperty("name")
@@ -18,12 +19,4 @@ public class AuthorGetDTO {
     @JsonProperty("birthdate")
     private Date birthdate;
 
-    @Override
-    public String toString() {
-        return "AuthorGetDTO{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", birthdate=" + birthdate +
-                '}';
-    }
 }

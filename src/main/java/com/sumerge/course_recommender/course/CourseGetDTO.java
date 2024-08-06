@@ -3,10 +3,10 @@ package com.sumerge.course_recommender.course;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
-@Getter
-@Setter
+@Getter @Setter @ToString
 public class CourseGetDTO {
 
     @JsonProperty("name")
@@ -18,12 +18,4 @@ public class CourseGetDTO {
     @JsonProperty("credit")
     private int credit;
 
-    @Override
-    public String toString() {
-        return "CourseGetDTO{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", credit=" + credit +
-                '}';
-    }
 }

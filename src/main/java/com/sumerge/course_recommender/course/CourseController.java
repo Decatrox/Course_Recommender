@@ -1,7 +1,10 @@
 package com.sumerge.course_recommender.course;
 
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -9,13 +12,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/courses")
+@AllArgsConstructor
 public class CourseController {
 
     private final CourseService courseService;
 
-    public CourseController (CourseService courseService) {
-        this.courseService = courseService;
-    }
+//    public CourseController (CourseService courseService) {
+//        this.courseService = courseService;
+//    }
 
     @GetMapping("/discover/{pageNumber}")
     public ResponseEntity<Page<Course>> recommendCourse(@PathVariable int pageNumber) {
@@ -37,7 +41,7 @@ public class CourseController {
     @DeleteMapping("/delete/{id}")
     public String deleteCourse(@PathVariable UUID id) {
         String details = courseService.viewCourse(id).toString();
-
+        courseService.deleteCourse(id);
         try{
         courseService.deleteCourse(id);
         return "Deleted course: " + details;
@@ -47,10 +51,12 @@ public class CourseController {
         }
     }
 
-
+//    @Validated
     @PostMapping("/add")
-    public String addCourse(@RequestBody Course course) {
+    public String addCourse(@Valid @RequestBody Course course) {
         courseService.addCourse(course);
         return "Added course: " + course.getName();
+//        Course savedCourse = courseService.addCourse(course);
+//        return ResponseEntity.ok(savedCourse);
     }
 }
