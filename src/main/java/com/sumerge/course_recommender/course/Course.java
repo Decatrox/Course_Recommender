@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.UUID;
 
 @Entity
 @Getter @Setter //can use constructor with the needed values only instead of Getter but here it doesn't matter I think
+@NoArgsConstructor // for creating an instance when testing
+@EqualsAndHashCode // for comparing Courses when testing
 public class Course {
     @Id
     @Column(name = "id")
