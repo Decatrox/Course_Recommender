@@ -1,9 +1,7 @@
-package com.sumerge.course_recommender.controller;
+package com.sumerge.course_recommender.course;
 
-import com.sumerge.course_recommender.CourseService;
-import com.sumerge.course_recommender.Course_old;
-import com.sumerge.course_recommender.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +14,16 @@ import java.util.UUID;
 public class CourseController {
 
 //    @Autowired
-    private CourseService courseService;
+    private final CourseService courseService;
 
-    @Autowired
+//    @Autowired
     public CourseController (CourseService courseService) {
         this.courseService = courseService;
     }
 
-    @GetMapping("/discover")
-    public ResponseEntity<List<Course>> recommendCourse() {
-        return ResponseEntity.ok(courseService.getRecommendedCourses());
+    @GetMapping("/discover/{pageNumber}")
+    public ResponseEntity<Page<Course>> recommendCourse(@PathVariable int pageNumber) {
+        return ResponseEntity.ok(courseService.getRecommendedCourses(pageNumber));
     }
 
     @GetMapping("/view")
@@ -43,6 +41,7 @@ public class CourseController {
     @DeleteMapping("/delete/{id}")
     public String deleteCourse(@PathVariable UUID id) {
         String details = courseService.viewCourse(id).toString();
+
         try{
         courseService.deleteCourse(id);
         return "Deleted course: " + details;

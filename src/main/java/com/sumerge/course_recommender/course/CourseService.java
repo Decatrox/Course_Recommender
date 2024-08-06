@@ -1,9 +1,8 @@
-package com.sumerge.course_recommender;
+package com.sumerge.course_recommender.course;
 
-import com.sumerge.course_recommender.model.Course;
-import com.sumerge.course_recommender.repo.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,34 +11,39 @@ import java.util.UUID;
 @Service//@Component
 public class CourseService {
 
-    CourseRecommender courseRecommender;
+    private final CourseRecommender courseRecommender;
 
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
-    @Autowired
+//    @Autowired
     public CourseService(@Qualifier("courseRecommenderFun") CourseRecommender courseRecommender, CourseRepository courseRepository) {
         this.courseRecommender = courseRecommender;
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> getRecommendedCourses() {
-        return courseRecommender.recommendedCourses();
+    public Page<Course> getRecommendedCourses(int pageNumber) {
+
+        return courseRecommender.recommendedCourses(pageNumber);
     }
 
     public void addCourse(Course course){
-        courseRepository.addCourse(course);
+        courseRepository.save(course);
     }
 
     public void updateCourse(UUID course_id, Course course){
-        courseRepository.updateCourse(course_id, course);
+        Course c = courseRepository.getReferenceById(course_id);
+        c.setName(course.getName());
+        c.setDescription(course.getDescription());
+        c.setCredit(course.getCredit());
+        courseRepository.save(c);
     }
 
     public Course viewCourse(UUID course_id){
-        return courseRepository.viewCourse(course_id);
+        return courseRepository.findById(course_id).get();
     }
 
     public void deleteCourse(UUID course_id){
-        courseRepository.deleteCourse(course_id);
+        courseRepository.deleteById(course_id);
     }
 
 }

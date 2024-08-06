@@ -1,14 +1,10 @@
-package com.sumerge.course_recommender.repo;
+package com.sumerge.course_recommender.author;
 
-import com.sumerge.course_recommender.model.Author;
-import com.sumerge.course_recommender.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -30,7 +26,7 @@ public class AuthorRepository {
         return jdbcTemplate;
     }
 
-    @Autowired
+//    @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
