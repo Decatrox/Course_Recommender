@@ -8,7 +8,7 @@ create table if not exists course (
 );
 
 create table if not exists assessment (
-    course_id uuid,
+    course_id UUID PRIMARY KEY,
     foreign key (course_id) references course (id),
     content varchar(30)
 );

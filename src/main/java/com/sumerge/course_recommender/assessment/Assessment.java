@@ -1,18 +1,24 @@
-package com.sumerge.course_recommender.model;
+package com.sumerge.course_recommender.assessment;
 
-import jakarta.persistence.Table;
+import com.sumerge.course_recommender.course.Course;
+import jakarta.persistence.*;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
-@Scope("prototype")
+@Entity
 public class Assessment {
+    @Id
+    @GeneratedValue
     private UUID id;
+
     private String content;
-    private UUID course_id;
+
+    @OneToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+//    private UUID course_id;
 
     public UUID getId() {
         return id;
@@ -30,13 +36,13 @@ public class Assessment {
         this.content = content;
     }
 
-    public UUID getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(UUID course_id) {
-        this.course_id = course_id;
-    }
+//    public UUID getCourse_id() {
+//        return course_id;
+//    }
+//
+//    public void setCourse_id(UUID course_id) {
+//        this.course_id = course_id;
+//    }
 
     @Override
     public String toString() {

@@ -1,6 +1,5 @@
-package com.sumerge.course_recommender.repo;
+package com.sumerge.course_recommender.assessment;
 
-import com.sumerge.course_recommender.model.Assessment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,7 +32,7 @@ public class AssessmentRepository {
         return template;
     }
 
-    @Autowired
+//    @Autowired
     public void setTemplate(JdbcTemplate template) {
         this.template = template;
     }
