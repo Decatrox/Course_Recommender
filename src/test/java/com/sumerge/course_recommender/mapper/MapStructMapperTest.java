@@ -30,7 +30,7 @@ class MapStructMapperTest {
         Course testCourse = new Course();
         String name = "Test Course";
         String description = "Test Description";
-        int credit = 0;
+        int credit = 8;
         testCourse.setName(name);
         testCourse.setDescription(description);
         testCourse.setCredit(credit);

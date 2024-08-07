@@ -17,9 +17,6 @@ public class CourseController {
 
     private final CourseService courseService;
 
-//    public CourseController (CourseService courseService) {
-//        this.courseService = courseService;
-//    }
 
     @GetMapping("/discover/{pageNumber}")
     public ResponseEntity<Page<Course>> recommendCourse(@PathVariable int pageNumber) {
@@ -32,7 +29,7 @@ public class CourseController {
     }
 
     @PutMapping("/update/{id}")
-    public String updateCourse(@PathVariable UUID id, @RequestBody Course course) {
+    public String updateCourse(@PathVariable UUID id, @RequestBody CoursePostDTO course) {
         String old = courseService.viewCourse(id).toString();
         courseService.updateCourse(id, course);
         return "changed " + old + " \nto " + course.toString();
@@ -53,7 +50,7 @@ public class CourseController {
 
 //    @Validated
     @PostMapping("/add")
-    public String addCourse(@Valid @RequestBody Course course) {
+    public String addCourse(@Valid @RequestBody CoursePostDTO course) {
         courseService.addCourse(course);
         return "Added course: " + course.getName();
 //        Course savedCourse = courseService.addCourse(course);
