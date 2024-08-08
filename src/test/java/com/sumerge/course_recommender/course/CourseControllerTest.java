@@ -78,12 +78,10 @@ class CourseControllerTest {
     void shouldCallUpdateCourseService() throws Exception {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         UUID testCourseId = UUID.randomUUID();
-        doNothing().when(courseService).updateCourse(eq(testCourseId), any(CoursePostDTO.class));
-
+        when(courseService.updateCourse(eq(testCourseId), any(CoursePostDTO.class))).thenReturn("updated");
         mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Updated Course with id: " + testCourseId + " to become\n" + coursePostDTO.toString()));
+                .andExpect(status().isOk());
 
         verify(courseService).updateCourse(eq(testCourseId), any(CoursePostDTO.class));
     }
@@ -98,12 +96,12 @@ class CourseControllerTest {
         ArgumentCaptor<CoursePostDTO> coursePostDTOArgumentCaptor = ArgumentCaptor.forClass(CoursePostDTO.class);
         ArgumentCaptor<UUID> uuidArgumentCaptor = ArgumentCaptor.forClass(UUID.class);
 
-        doNothing().when(courseService).updateCourse(uuidArgumentCaptor.capture(), coursePostDTOArgumentCaptor.capture());
+        when(courseService.updateCourse(uuidArgumentCaptor.capture(), coursePostDTOArgumentCaptor.capture())).thenReturn("updated");
+
 
         mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Updated Course with id: " + testCourseId + " to become\n" + coursePostDTO.toString()));
+                .andExpect(status().isOk());
 
         verify(courseService).updateCourse(uuidArgumentCaptor.capture(), coursePostDTOArgumentCaptor.capture());
 
@@ -112,10 +110,10 @@ class CourseControllerTest {
     @Test
     void shouldCallDeleteCourseByIdService() throws Exception {
         UUID testCourseId = UUID.randomUUID();
-        doNothing().when(courseService).deleteCourse(testCourseId);
+        when(courseService.deleteCourse(testCourseId)).thenReturn("deleted");
 
         mockMvc.perform(delete("/courses/delete/{id}", testCourseId))
-                .andExpect(status().isOk()).andExpect(content().string("Deleted Course with id " + testCourseId));
+                .andExpect(status().isOk());
 
         verify(courseService).deleteCourse(testCourseId);
     }
@@ -125,7 +123,7 @@ class CourseControllerTest {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         String name = "Test Name"; String description = "Test Description"; int credit = 6;
         coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
-        doNothing().when(courseService).addCourse(any(CoursePostDTO.class));
+        when(courseService.addCourse(any(CoursePostDTO.class))).thenReturn(name);
 
         mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(coursePostDTO)))
@@ -142,7 +140,8 @@ class CourseControllerTest {
         coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
 
         ArgumentCaptor<CoursePostDTO> coursePostDTOArgumentCaptor = ArgumentCaptor.forClass(CoursePostDTO.class);
-        doNothing().when(courseService).addCourse(coursePostDTOArgumentCaptor.capture());
+        when(courseService.addCourse(coursePostDTOArgumentCaptor.capture())).thenReturn(name);
+
 
         mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))

@@ -23,16 +23,18 @@ public class CourseService {
         return courseRecommender.recommendedCourses(pageNumber);
     }
 
-    public void addCourse(CoursePostDTO course){
+    public String addCourse(CoursePostDTO course){
         courseRepository.save(mapStructMapper.coursePostDTOToCourse(course));
+        return "Added course: " + course.getName();
     }
 
-    public void updateCourse(UUID courseId, CoursePostDTO course){
+    public String updateCourse(UUID courseId, CoursePostDTO course){
         Course c = courseRepository.getReferenceById(courseId);
         c.setName(course.getName());
         c.setDescription(course.getDescription());
         c.setCredit(course.getCredit());
         courseRepository.save(c);
+        return "Updated Course with id: " + courseId + " to become\n" + course.toString();
     }
 
     public CourseGetDTO viewCourse(UUID courseId){
@@ -41,9 +43,10 @@ public class CourseService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public void deleteCourse(UUID courseId){
+    public String deleteCourse(UUID courseId){
         if (!courseRepository.existsById(courseId)) throw new EntityNotFoundException();
         courseRepository.deleteById(courseId);
+        return "Deleted Course with id " + courseId;
     }
 
 }
