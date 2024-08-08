@@ -15,7 +15,7 @@ public class AuthorController {
     }
 
     @PostMapping("/add")
-    public void AddAuthor(@Valid @RequestBody AuthorPostDTO author) {
+    public void addAuthor(@Valid @RequestBody AuthorPostDTO author) {
         authorService.addAuthor(author);
     }
 

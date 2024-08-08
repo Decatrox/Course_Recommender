@@ -19,7 +19,6 @@ public class AuthorService {
     }
 
     public AuthorGetDTO getAuthorByEmail (String email) {
-//        return mapStructMapper.authorToAuthorGetDTO(authorRepository.findByEmail(email));
         Author author = authorRepository.findByEmail(email);
         if (author == null) {
             throw new EntityNotFoundException();

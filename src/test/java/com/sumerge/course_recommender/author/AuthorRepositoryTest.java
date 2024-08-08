@@ -78,8 +78,9 @@ void emailValidationTest() {
     Set<ConstraintViolation<Author>> violations = validator.validate(testAuthor);
 
     // Then
-    assertThat(violations).isNotEmpty(); // Ensures that there are validation errors
-    assertThat(violations).anyMatch(v -> v.getMessage().equals("Email must be in a valid format"));
+    assertThat(violations)
+            .isNotEmpty()
+            .anyMatch(v -> v.getMessage().equals("Email must be in a valid format"));
 }
 
 }
