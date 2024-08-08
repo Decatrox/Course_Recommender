@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.computeIfAbsent(fieldName, _ -> new ArrayList<>()).add(errorMessage);
+            errors.computeIfAbsent(fieldName, nothing -> new ArrayList<>()).add(errorMessage);
 
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
