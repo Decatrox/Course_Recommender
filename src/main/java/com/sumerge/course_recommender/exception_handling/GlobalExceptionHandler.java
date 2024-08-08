@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.exception_handling;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -38,7 +39,6 @@ public class GlobalExceptionHandler {
         String errorMessage = "Invalid JSON format: " + ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
-
 }
 
 
