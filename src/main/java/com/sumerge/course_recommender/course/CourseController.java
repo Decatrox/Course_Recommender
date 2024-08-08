@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -23,37 +22,30 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getRecommendedCourses(pageNumber));
     }
 
-    @GetMapping("/view")
-    public ResponseEntity<CourseGetDTO> viewCourse(@RequestParam("id") UUID id) {
+    @GetMapping("/view/{id}")
+    public ResponseEntity<CourseGetDTO> viewCourse(@PathVariable UUID id) {
         return ResponseEntity.ok(courseService.viewCourse(id));
     }
 
     @PutMapping("/update/{id}")
-    public String updateCourse(@PathVariable UUID id, @RequestBody CoursePostDTO course) {
-        String old = courseService.viewCourse(id).toString();
+    public ResponseEntity<String> updateCourse(@PathVariable UUID id, @RequestBody CoursePostDTO course) {
+//        String old = courseService.viewCourse(id).toString();
         courseService.updateCourse(id, course);
-        return "changed " + old + " \nto " + course.toString();
+        return ResponseEntity.ok("Updated Course with id: " + id + " to become\n" + course.toString());
+//        return "changed " + old + " \nto " + course.toString();
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteCourse(@PathVariable UUID id) {
-        String details = courseService.viewCourse(id).toString();
+    public ResponseEntity<String> deleteCourse(@PathVariable UUID id) {
+//        String details = courseService.viewCourse(id).toString();
         courseService.deleteCourse(id);
-        try{
-        courseService.deleteCourse(id);
-        return "Deleted course: " + details;
-        }
-        catch (Exception e) {
-            return "Could not delete course";
-        }
+        return ResponseEntity.ok("Deleted Course with id " + id);
     }
 
 //    @Validated
     @PostMapping("/add")
-    public String addCourse(@Valid @RequestBody CoursePostDTO course) {
+    public ResponseEntity<String> addCourse(@Valid @RequestBody CoursePostDTO course) {
         courseService.addCourse(course);
-        return "Added course: " + course.getName();
-//        Course savedCourse = courseService.addCourse(course);
-//        return ResponseEntity.ok(savedCourse);
+        return ResponseEntity.ok("Added course: " + course.getName());
     }
 }

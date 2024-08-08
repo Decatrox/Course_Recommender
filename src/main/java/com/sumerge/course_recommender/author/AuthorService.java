@@ -13,8 +13,8 @@ public class AuthorService {
     private final MapStructMapper mapStructMapper;
 
 
-    public void addAuthor (Author author) {
-        authorRepository.save(author);
+    public void addAuthor (AuthorPostDTO author) {
+        authorRepository.save(mapStructMapper.authorPostDTOToAuthor(author));
     }
 
     public AuthorGetDTO getAuthorByEmail (String email) {

@@ -27,15 +27,15 @@ public class Course {
     private UUID id;
 
     @Column
-    @NotBlank(message = "Name is required")
+//    @NotBlank(message = "Name is required")
 //    will check later. need to handle when validation fails but it works.
     private String name;
 
     @Column
     private String description;
 
-    @Min(value = 0, message = "Course Credit Points cannot be Negative")
-    @Max(value = 12, message = "Maximum Course Credit Points is 12")
+//    @Min(value = 0, message = "Course Credit Points cannot be Negative")
+//    @Max(value = 12, message = "Maximum Course Credit Points is 12")
     @Column
     private int credit;
 
