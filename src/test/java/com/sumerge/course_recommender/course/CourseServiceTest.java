@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Mockito.*;
@@ -27,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
-
+    @InjectMocks
     private CourseService underTest;
 
     @Mock
@@ -47,7 +48,7 @@ class CourseServiceTest {
     @BeforeEach
     void setUp() {
 //        autoCloseable = MockitoAnnotations.openMocks(this);
-        underTest = new CourseService(courseRecommender, courseRepository, mapStructMapper);
+//        underTest = new CourseService(courseRecommender, courseRepository, mapStructMapper);
         testCourse = new Course();
         testCourse.setName(name); testCourse.setDescription(description); testCourse.setCredit(credit);
 
