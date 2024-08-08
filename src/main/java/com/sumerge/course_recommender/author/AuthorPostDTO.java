@@ -19,6 +19,7 @@ public class AuthorPostDTO {
 
     @JsonProperty("email")
     @Email(message = "Email must be in a valid format")
+    @NotBlank(message = "Must Provide an Email")
     private String email;
 
     @JsonProperty("birthdate")

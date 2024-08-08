@@ -17,6 +17,7 @@ public class CoursePostDTO {
     private String name;
 
     @JsonProperty("description")
+    @NotBlank(message = "Description is required")
     private String description;
 
     @JsonProperty("credit")
