@@ -28,17 +28,10 @@
     </scm>
     <properties>
         <java.version>22</java.version>
-<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../path_to_module_with_report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
-<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../path_to_module_with_report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
-<!--        <sonar.coverage.jacoco.xmlReportPaths>C:\Users\osaad\IdeaProjects\course_recommender\target\site\jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
         <sonar.coverage.jacoco.xmlReportPaths>C:\Users\osaad\IdeaProjects\course_recommender\target\site\jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
             <sonar.verbose>true</sonar.verbose>
     </properties>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-jdbc</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -129,86 +122,8 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.12</version>
         </dependency>
-
-
     </dependencies>
 
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; ... &ndash;&gt;-->
-
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.13.0</version>-->
-<!--                <configuration>-->
-<!--                    <source>22</source> &lt;!&ndash; depending on your project. In this example, Java 11 is used &ndash;&gt;-->
-<!--                    <target>22</target> &lt;!&ndash; depending on your project. In this example, Java 11 is used &ndash;&gt;-->
-<!--                    <annotationProcessorPaths>-->
-<!--                        <path>-->
-<!--                            <groupId>org.projectlombok</groupId>-->
-<!--                            <artifactId>lombok</artifactId>-->
-<!--                            <version>1.18.34</version>-->
-<!--                        </path>-->
-<!--                        <path>-->
-<!--                            <groupId>org.mapstruct</groupId>-->
-<!--                            <artifactId>mapstruct-processor</artifactId>-->
-<!--                            <version>1.5.5.Final</version>-->
-<!--                        </path>-->
-<!--                    </annotationProcessorPaths>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
-
-
-<!--        </plugins>-->
-<!--    </build>-->
-
-<!--    <profiles>-->
-<!--    <profile>-->
-<!--        <id>coverage</id>-->
-<!--        <activation>-->
-<!--            <activeByDefault>true</activeByDefault>-->
-<!--        </activation>-->
-<!--        <build>-->
-<!--            <plugins>-->
-<!--                <plugin>-->
-<!--                    <groupId>org.jacoco</groupId>-->
-<!--                    <artifactId>jacoco-maven-plugin</artifactId>-->
-<!--                    <version>0.8.12</version>-->
-<!--                    <executions>-->
-<!--                        <execution>-->
-<!--                            <id>prepare-agent</id>-->
-<!--                            <goals>-->
-<!--                                <goal>prepare-agent</goal>-->
-<!--                            </goals>-->
-<!--                        </execution>-->
-<!--                        <execution>-->
-<!--                            <id>report</id>-->
-<!--                            <goals>-->
-<!--                                <goal>report-aggregate</goal>-->
-<!--                            </goals>-->
-<!--                            <phase>verify</phase>-->
-<!--                        </execution>-->
-<!--                    </executions>-->
-<!--                </plugin>-->
-
-<!--                <plugin>-->
-<!--                    <groupId>org.sonarsource.scanner.maven</groupId>-->
-<!--                    <artifactId>sonar-maven-plugin</artifactId>-->
-<!--                    <version>4.0.0.4121</version>-->
-<!--                </plugin>-->
-<!--            </plugins>-->
-<!--        </build>-->
-
-<!--    </profile>-->
-<!--    </profiles>-->
     <build>
         <plugins>
             <plugin>
