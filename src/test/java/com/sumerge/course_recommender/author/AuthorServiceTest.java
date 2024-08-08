@@ -1,6 +1,5 @@
 package com.sumerge.course_recommender.author;
 
-import com.sumerge.course_recommender.course.CourseGetDTO;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -11,8 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
+
 
 import static org.assertj.core.api.Assertions.*;
 

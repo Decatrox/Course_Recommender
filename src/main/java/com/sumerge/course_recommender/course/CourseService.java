@@ -1,12 +1,9 @@
 package com.sumerge.course_recommender.course;
 
-import com.sumerge.course_recommender.course.recommenders.CourseRecommenderFun;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +36,6 @@ public class CourseService {
     }
 
     public CourseGetDTO viewCourse(UUID course_id){
-//        return mapStructMapper.courseToCourseGetDTO(courseRepository.findById(course_id).get());
         return courseRepository.findById(course_id)
                 .map(mapStructMapper::courseToCourseGetDTO)
                 .orElseThrow(EntityNotFoundException::new);

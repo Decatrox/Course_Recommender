@@ -1,29 +1,21 @@
 package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import static org.assertj.core.api.Assertions.*;
 
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -43,15 +35,11 @@ class CourseServiceTest {
     private final String name = "Test Course";
     private final String description = "Test Description";
     private final int credit = 8;
-//    private AutoCloseable autoCloseable;
 
     @BeforeEach
     void setUp() {
-//        autoCloseable = MockitoAnnotations.openMocks(this);
-//        underTest = new CourseService(courseRecommender, courseRepository, mapStructMapper);
         testCourse = new Course();
         testCourse.setName(name); testCourse.setDescription(description); testCourse.setCredit(credit);
-
     }
 
 

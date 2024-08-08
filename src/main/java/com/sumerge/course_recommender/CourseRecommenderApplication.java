@@ -10,6 +10,6 @@ import org.springframework.context.ApplicationContext;
 public class CourseRecommenderApplication {
 
     public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(CourseRecommenderApplication.class, args);
+        SpringApplication.run(CourseRecommenderApplication.class, args);
     }
 }

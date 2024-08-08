@@ -1,10 +1,6 @@
 package com.sumerge.course_recommender.author;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sumerge.course_recommender.course.CourseController;
-import com.sumerge.course_recommender.course.CourseGetDTO;
-import com.sumerge.course_recommender.course.CoursePostDTO;
-import com.sumerge.course_recommender.course.CourseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,9 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;

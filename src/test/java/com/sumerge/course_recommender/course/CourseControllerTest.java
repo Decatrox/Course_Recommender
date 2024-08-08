@@ -1,6 +1,5 @@
 package com.sumerge.course_recommender.course;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +41,6 @@ class CourseControllerTest {
 
     @BeforeEach
     public void setUp() {
-//        underTest = new CourseController(courseService);
         mockMvc = MockMvcBuilders.standaloneSetup(underTest).build();
     }
 

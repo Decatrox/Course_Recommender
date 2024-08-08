@@ -3,10 +3,8 @@ package com.sumerge.course_recommender.exception_handling;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class GlobalExceptionHandlerTest {
@@ -41,9 +38,7 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<Map<String, ArrayList<String>>> res = underTest.handleValidationExceptions(ex);
 
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-//        assertThat(res.getBody().get("objectName")).isEqualTo("Test Object Name (Course)");
         assertThat(res.getBody().get("Test Field Name (name)")).isEqualTo((messages));
-//        assertThat(res.getBody().get("defaultMessage")).isEqualTo("Test Message (name can't be null)");
     }
 
     @Test

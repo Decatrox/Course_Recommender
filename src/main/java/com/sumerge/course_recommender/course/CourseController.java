@@ -29,20 +29,16 @@ public class CourseController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable UUID id, @RequestBody CoursePostDTO course) {
-//        String old = courseService.viewCourse(id).toString();
         courseService.updateCourse(id, course);
         return ResponseEntity.ok("Updated Course with id: " + id + " to become\n" + course.toString());
-//        return "changed " + old + " \nto " + course.toString();
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable UUID id) {
-//        String details = courseService.viewCourse(id).toString();
         courseService.deleteCourse(id);
         return ResponseEntity.ok("Deleted Course with id " + id);
     }
 
-//    @Validated
     @PostMapping("/add")
     public ResponseEntity<String> addCourse(@Valid @RequestBody CoursePostDTO course) {
         courseService.addCourse(course);

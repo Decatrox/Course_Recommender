@@ -6,19 +6,15 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
-//import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 import java.util.Date;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 // No need to test this since the methods here are from JPARepository but I wrote the tests for learning purposes
 @DataJpaTest
@@ -66,26 +62,6 @@ class AuthorRepositoryTest {
         //Then
         assertThat(resultAuthor).isNotEqualTo(testAuthor);
     }
-
-//    @Test
-//    @Transactional
-//    void itShouldNotSaveWithWrongEmail() {
-//        //Given
-//        String email = "testtest.com";
-//        Author testAuthor = new Author();
-//        testAuthor.setName("Bob");
-//        testAuthor.setEmail(email);
-//        testAuthor.setBirthdate(new Date());
-//        underTest.save(testAuthor);
-//
-//        //When
-////        assertThatThrownBy(() -> underTest.save(testAuthor))
-////                .isInstanceOf(ConstraintViolationException.class);
-//        //Then
-//        Boolean exists = underTest.existsByEmail(email);
-//        assertThat(exists).isFalse();
-//
-//    }
 
 
 @Disabled

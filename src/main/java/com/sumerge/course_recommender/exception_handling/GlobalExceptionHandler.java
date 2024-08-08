@@ -21,15 +21,6 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-//            ArrayList<String> errorList;
-//            if (errors.containsKey(fieldName)) {
-//                errorList = errors.get(fieldName);
-//            }
-//            else{
-//                errorList = new ArrayList<>();
-//            }
-//            errorList.add(errorMessage);
-//            errors.put(fieldName, errorList);
             errors.computeIfAbsent(fieldName, _ -> new ArrayList<>()).add(errorMessage);
 
         });

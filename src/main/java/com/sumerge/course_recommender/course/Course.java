@@ -4,9 +4,6 @@ import com.sumerge.course_recommender.assessment.Assessment;
 import com.sumerge.course_recommender.author.Author;
 import com.sumerge.course_recommender.rating.Rating;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +14,9 @@ import java.util.UUID;
 
 
 @Entity
-@Getter @Setter //can use constructor with the needed values only instead of Getter but here it doesn't matter I think
-@NoArgsConstructor // for creating an instance when testing
-@EqualsAndHashCode // for comparing Courses when testing
+@Getter @Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Course {
     @Id
     @Column(name = "id")
@@ -27,15 +24,12 @@ public class Course {
     private UUID id;
 
     @Column
-//    @NotBlank(message = "Name is required")
-//    will check later. need to handle when validation fails but it works.
     private String name;
 
     @Column
     private String description;
 
-//    @Min(value = 0, message = "Course Credit Points cannot be Negative")
-//    @Max(value = 12, message = "Maximum Course Credit Points is 12")
+
     @Column
     private int credit;
 
@@ -48,7 +42,7 @@ public class Course {
     )
     private List<Author> authors;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @OneToOne(cascade = CascadeType.ALL)
     private Assessment assessment;
 
 }
