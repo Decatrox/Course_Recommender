@@ -2,6 +2,7 @@ package com.sumerge.course_recommender.author;
 
 import com.sumerge.course_recommender.course.CourseGetDTO;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -59,6 +60,12 @@ class AuthorServiceTest {
         AuthorGetDTO returnedAuthor = underTest.getAuthorByEmail(email);
 
         assertThat(returnedAuthor).usingRecursiveComparison().ignoringFields("id").isEqualTo(author);
+
+        //Test if Author is null
+        String invalidEmail = "a";
+        org.mockito.Mockito.when(authorRepository.findByEmail(invalidEmail)).thenReturn(null);
+        assertThatThrownBy(() -> underTest.getAuthorByEmail(invalidEmail))
+                .isInstanceOf(EntityNotFoundException.class);
 
     }
 }

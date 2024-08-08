@@ -23,13 +23,10 @@ public class Author {
     @GeneratedValue
     private UUID id;
 
-    @NotBlank(message = "Name is required")
     private String name;
 
-    @Email(message = "Email must be in a valid format")
     private String email;
 
-    @Past
     private Date birthdate;
 
     @ManyToMany

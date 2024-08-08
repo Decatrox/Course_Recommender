@@ -2,6 +2,7 @@ package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.course.recommenders.CourseRecommenderFun;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -38,11 +39,15 @@ public class CourseService {
     }
 
     public CourseGetDTO viewCourse(UUID course_id){
-        return mapStructMapper.courseToCourseGetDTO(courseRepository.findById(course_id).get());
+//        return mapStructMapper.courseToCourseGetDTO(courseRepository.findById(course_id).get());
+        return courseRepository.findById(course_id)
+                .map(mapStructMapper::courseToCourseGetDTO)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public void deleteCourse(UUID course_id){
-            courseRepository.deleteById(course_id);
+        if (!courseRepository.existsById(course_id)) throw new EntityNotFoundException();
+        courseRepository.deleteById(course_id);
     }
 
 }

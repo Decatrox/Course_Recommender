@@ -129,6 +129,9 @@ class CourseServiceTest {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
 
+        org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(true);
+        org.mockito.Mockito.doNothing().when(courseRepository).deleteById(id);
+
         underTest.deleteCourse(id);
 
         ArgumentCaptor<UUID> idArgumentCaptor = ArgumentCaptor.forClass(UUID.class);

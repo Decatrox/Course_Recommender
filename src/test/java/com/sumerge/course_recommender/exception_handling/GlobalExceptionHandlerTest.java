@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.exception_handling;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,5 +44,12 @@ class GlobalExceptionHandlerTest {
 //        assertThat(res.getBody().get("objectName")).isEqualTo("Test Object Name (Course)");
         assertThat(res.getBody().get("Test Field Name (name)")).isEqualTo((messages));
 //        assertThat(res.getBody().get("defaultMessage")).isEqualTo("Test Message (name can't be null)");
+    }
+
+    @Test
+    void shouldHandleEntityNotFoundExceptionAndReturnErrorMessage() {
+        underTest = new GlobalExceptionHandler();
+        String s = underTest.handleEntityNotFoundException(new EntityNotFoundException());
+        assertThat(s).isNotEmpty();
     }
 }

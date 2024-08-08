@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.author;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class AuthorController {
     }
 
     @PostMapping("/add")
-    public void AddAuthor(@RequestBody AuthorPostDTO author) {
+    public void AddAuthor(@Valid @RequestBody AuthorPostDTO author) {
         authorService.addAuthor(author);
     }
 

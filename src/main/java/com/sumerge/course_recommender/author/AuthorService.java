@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.author;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,12 @@ public class AuthorService {
     }
 
     public AuthorGetDTO getAuthorByEmail (String email) {
-        return mapStructMapper.authorToAuthorGetDTO(authorRepository.findByEmail(email));
+//        return mapStructMapper.authorToAuthorGetDTO(authorRepository.findByEmail(email));
+        Author author = authorRepository.findByEmail(email);
+        if (author == null) {
+            throw new EntityNotFoundException();
+        }
+        return mapStructMapper.authorToAuthorGetDTO(author);
     }
 
 }
