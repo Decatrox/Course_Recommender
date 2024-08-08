@@ -28,7 +28,7 @@ public class CourseController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateCourse(@PathVariable UUID id, @RequestBody CoursePostDTO course) {
+    public ResponseEntity<String> updateCourse(@PathVariable UUID id, @Valid @RequestBody CoursePostDTO course) {
         return ResponseEntity.ok(courseService.updateCourse(id, course));
     }
 
