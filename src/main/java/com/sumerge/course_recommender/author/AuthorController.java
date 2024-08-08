@@ -20,7 +20,7 @@ public class AuthorController {
     }
 
     @GetMapping("/GetByEmail/{email}")
-    public ResponseEntity<AuthorGetDTO> getAuthorByEmail(@PathVariable String email) {
+    public ResponseEntity<AuthorGetDTO> getAuthorByEmail(@Valid @PathVariable String email) {
         return ResponseEntity.ok(authorService.getAuthorByEmail(email));
     }
 }
