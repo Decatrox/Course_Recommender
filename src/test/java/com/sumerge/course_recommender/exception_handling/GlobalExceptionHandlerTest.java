@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -46,5 +47,12 @@ class GlobalExceptionHandlerTest {
         underTest = new GlobalExceptionHandler();
         String s = underTest.handleEntityNotFoundException(new EntityNotFoundException());
         assertThat(s).isNotEmpty();
+    }
+
+    @Test
+    void shouldHandleHttpMessageNotReadableExceptionAndReturnErrorMessage() {
+        underTest = new GlobalExceptionHandler();
+        ResponseEntity<String> res = underTest.handleHttpMessageNotReadableException(new HttpMessageNotReadableException(""));
+        assertThat(res.getBody()).isNotEmpty();
     }
 }
