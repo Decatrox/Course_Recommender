@@ -7,6 +7,10 @@ import com.sumerge.course_recommender.course.Course;
 import com.sumerge.course_recommender.course.CourseGetDTO;
 import com.sumerge.course_recommender.course.CoursePostDTO;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
+import java.util.List;
 
 @Mapper(
         componentModel = "spring"
@@ -17,4 +21,12 @@ public interface MapStructMapper {
     Course coursePostDTOToCourse(CoursePostDTO coursePostDTO);
     AuthorGetDTO authorToAuthorGetDTO(Author author);
     Author authorPostDTOToAuthor(AuthorPostDTO authorPostDTO);
+
+     default Page<CourseGetDTO> pageCourseToPageCourseGetDTO(Page<Course> coursePage) {
+        List<CourseGetDTO> courseGetDTOList = coursePage
+                .map(this::courseToCourseGetDTO)
+                .getContent();
+
+        return new PageImpl<>(courseGetDTOList, coursePage.getPageable(), coursePage.getTotalElements());
+    }
 }
