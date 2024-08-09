@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.author;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,6 +43,16 @@ class AuthorServiceTest {
         Author authorSaved = authorCaptor.getValue();
 
         assertThat(authorSaved).isEqualTo(author);
+    }
+
+    @Test
+    void itShouldNotAddDuplicateAuthor() {
+        AuthorPostDTO authorPostDTO = new AuthorPostDTO();
+        String email = "author@gmail.com";
+        authorPostDTO.setEmail(email);
+        org.mockito.Mockito.when(authorRepository.existsByEmail(email)).thenReturn(true);
+        assertThatThrownBy(() -> underTest.addAuthor(authorPostDTO))
+                .isInstanceOf(EntityExistsException.class);
     }
 
     @Test

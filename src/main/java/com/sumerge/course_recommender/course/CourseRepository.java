@@ -5,4 +5,5 @@ import org.springframework.data.repository.ListPagingAndSortingRepository;
 import java.util.UUID;
 
 public interface CourseRepository extends JpaRepository<Course, UUID>, ListPagingAndSortingRepository<Course, UUID> {
+    boolean existsByName(String name);
 }

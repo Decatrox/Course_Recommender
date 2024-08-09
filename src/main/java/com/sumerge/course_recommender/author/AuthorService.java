@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.author;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,9 @@ public class AuthorService {
 
 
     public void addAuthor (AuthorPostDTO author) {
+        if (authorRepository.existsByEmail(author.getEmail())){
+            throw new EntityExistsException("Author with this Email ");
+        }
         authorRepository.save(mapStructMapper.authorPostDTOToAuthor(author));
     }
 

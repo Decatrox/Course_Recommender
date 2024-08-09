@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,6 +70,7 @@ class CourseServiceTest {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
         org.mockito.Mockito.when(mapStructMapper.coursePostDTOToCourse(coursePostDTO)).thenReturn(testCourse);
+        org.mockito.Mockito.when(courseRepository.existsByName(name)).thenReturn(false);
 
         underTest.addCourse(coursePostDTO);
 
@@ -77,6 +79,16 @@ class CourseServiceTest {
         Course savedCourse = courseArgumentCaptor.getValue();
 
         assertThat(savedCourse).isEqualTo(testCourse);
+
+    }
+
+    @Test
+    void itShouldNotAddDuplicateCourse() {
+        CoursePostDTO coursePostDTO = new CoursePostDTO();
+        coursePostDTO.setName(name);
+        org.mockito.Mockito.when(courseRepository.existsByName(name)).thenReturn(true);
+        assertThatThrownBy(() -> underTest.addCourse(coursePostDTO))
+                .isInstanceOf(EntityExistsException.class);
 
     }
 

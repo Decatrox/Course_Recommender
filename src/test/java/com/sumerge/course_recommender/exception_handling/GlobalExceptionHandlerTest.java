@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.exception_handling;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,8 +46,9 @@ class GlobalExceptionHandlerTest {
     @Test
     void shouldHandleEntityNotFoundExceptionAndReturnErrorMessage() {
         underTest = new GlobalExceptionHandler();
-        String s = underTest.handleEntityNotFoundException(new EntityNotFoundException());
-        assertThat(s).isNotEmpty();
+        ResponseEntity<String> s = underTest.handleEntityNotFoundException(new EntityNotFoundException());
+        assertThat(s.getBody()).isNotEmpty();
+        assertThat(s.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test
@@ -54,5 +56,13 @@ class GlobalExceptionHandlerTest {
         underTest = new GlobalExceptionHandler();
         ResponseEntity<String> res = underTest.handleHttpMessageNotReadableException(new HttpMessageNotReadableException(""));
         assertThat(res.getBody()).isNotEmpty();
+    }
+
+    @Test
+    void shouldHandleEntityAlreadyExistsExceptionAndReturnErrorMessage() {
+        underTest = new GlobalExceptionHandler();
+        ResponseEntity<String> s = underTest.handleEntityExistsException(new EntityExistsException());
+        assertThat(s.getBody()).isNotEmpty();
+        assertThat(s.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
 }

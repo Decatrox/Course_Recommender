@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,9 @@ public class CourseService {
     }
 
     public String addCourse(CoursePostDTO course){
+        if (courseRepository.existsByName(course.getName())) {
+            throw new EntityExistsException("Course with this name ");
+        }
         courseRepository.save(mapStructMapper.coursePostDTOToCourse(course));
         return "Added course: " + course.getName();
     }

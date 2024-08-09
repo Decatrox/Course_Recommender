@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.exception_handling;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public String handleEntityNotFoundException(EntityNotFoundException ex) {
-        return "Not found";
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<String> handleEntityExistsException(EntityExistsException ex) {
+        return new ResponseEntity<>(ex.getMessage() + "already exists", HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
