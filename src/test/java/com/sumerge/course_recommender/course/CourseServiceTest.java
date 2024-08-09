@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.mapper.MapStructMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 
 import java.util.*;
@@ -55,7 +57,7 @@ class CourseServiceTest {
         underTest.getRecommendedCourses(pageNumber);
 
         ArgumentCaptor<Integer> pageNumberArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-        org.mockito.Mockito.verify(courseRecommender).recommendedCourses(pageNumberArgumentCaptor.capture());
+        verify(courseRecommender).recommendedCourses(pageNumberArgumentCaptor.capture());
         int queriedPageNumber = pageNumberArgumentCaptor.getValue();
 
         assertThat(queriedPageNumber).isEqualTo(pageNumber);
@@ -71,7 +73,7 @@ class CourseServiceTest {
         underTest.addCourse(coursePostDTO);
 
         ArgumentCaptor<Course> courseArgumentCaptor = ArgumentCaptor.forClass(Course.class);
-        org.mockito.Mockito.verify(courseRepository).save(courseArgumentCaptor.capture());
+        verify(courseRepository).save(courseArgumentCaptor.capture());
         Course savedCourse = courseArgumentCaptor.getValue();
 
         assertThat(savedCourse).isEqualTo(testCourse);
@@ -88,7 +90,7 @@ class CourseServiceTest {
         underTest.updateCourse(id, coursePostDTO);
 
         ArgumentCaptor<Course> courseArgumentCaptor = ArgumentCaptor.forClass(Course.class);
-        org.mockito.Mockito.verify(courseRepository).save(courseArgumentCaptor.capture());
+        verify(courseRepository).save(courseArgumentCaptor.capture());
         Course savedCourse = courseArgumentCaptor.getValue();
 
         assertThat(savedCourse).isEqualTo(testCourse);
@@ -123,10 +125,22 @@ class CourseServiceTest {
         underTest.deleteCourse(id);
 
         ArgumentCaptor<UUID> idArgumentCaptor = ArgumentCaptor.forClass(UUID.class);
-        org.mockito.Mockito.verify(courseRepository).deleteById(idArgumentCaptor.capture());
+        verify(courseRepository).deleteById(idArgumentCaptor.capture());
         UUID deletedID = idArgumentCaptor.getValue();
 
         assertThat(deletedID).isEqualTo(id);
+    }
+
+    @Test
+    void itShouldNotDeleteCourseIfInvalidId() {
+        UUID id = UUID.randomUUID();
+        CoursePostDTO coursePostDTO = new CoursePostDTO();
+        coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
+
+        org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(false);
+
+        assertThatThrownBy(() -> underTest.deleteCourse(id))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     private Course createTestCourse(int num) {

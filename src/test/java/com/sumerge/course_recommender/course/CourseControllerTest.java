@@ -95,6 +95,35 @@ class CourseControllerTest {
         mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
+
+        //Blank name
+        coursePostDTO.setName("");
+        coursePostDTO.setDescription("a");
+        coursePostDTO.setCredit(6);
+        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
+        //Blank Description
+        coursePostDTO.setName("a");
+        coursePostDTO.setDescription("");
+        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
+        //Negative Credit
+        coursePostDTO.setName("a");
+        coursePostDTO.setCredit(-1);
+        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
+        //More than 12 credits
+        coursePostDTO.setCredit(14);
+        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
     }
 
     @Test
@@ -117,6 +146,7 @@ class CourseControllerTest {
         verify(courseService).updateCourse(uuidArgumentCaptor.capture(), coursePostDTOArgumentCaptor.capture());
 
     }
+
 
     @Test
     void shouldCallDeleteCourseByIdService() throws Exception {
@@ -163,11 +193,41 @@ class CourseControllerTest {
 
     @Test
     void shouldFailToCallAddCourseServiceIfInvalid() throws Exception {
+        //All invalid
         CoursePostDTO coursePostDTO = new CoursePostDTO();
 
         mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
+
+        //Blank name
+        coursePostDTO.setName("");
+        coursePostDTO.setDescription("a");
+        coursePostDTO.setCredit(6);
+        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
+        //Blank Description
+        coursePostDTO.setName("a");
+        coursePostDTO.setDescription("");
+        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
+        //Negative Credit
+        coursePostDTO.setName("a");
+        coursePostDTO.setCredit(-1);
+        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
+        //More than 12 credits
+        coursePostDTO.setCredit(14);
+        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+
     }
 
     private static Page<CourseGetDTO> getCourses(int pageNumber) {
