@@ -19,8 +19,8 @@ public class CourseService {
     private final MapStructMapper mapStructMapper;
 
 
-    public Page<Course> getRecommendedCourses(int pageNumber) {
-        return courseRecommender.recommendedCourses(pageNumber);
+    public Page<CourseGetDTO> getRecommendedCourses(int pageNumber) {
+        return mapStructMapper.pageCourseToPageCourseGetDTO(courseRecommender.recommendedCourses(pageNumber));
     }
 
     public String addCourse(CoursePostDTO course){

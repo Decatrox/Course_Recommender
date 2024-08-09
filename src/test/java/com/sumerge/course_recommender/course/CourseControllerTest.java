@@ -48,7 +48,7 @@ class CourseControllerTest {
     @Test
     void shouldCallRecommendCourse() throws Exception {
         int pageNumber = 1;
-        Page<Course> page = getCourses(pageNumber);
+        Page<CourseGetDTO> page = getCourses(pageNumber);
 
         org.mockito.Mockito.when(courseService.getRecommendedCourses(pageNumber)).thenReturn(page);
         mockMvc.perform(get("/courses/discover/{pageNumber}", pageNumber))
@@ -77,6 +77,8 @@ class CourseControllerTest {
     @Test
     void shouldCallUpdateCourseService() throws Exception {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
+        coursePostDTO.setName("Test Name");
+        coursePostDTO.setDescription("Test Description"); coursePostDTO.setCredit(6);
         UUID testCourseId = UUID.randomUUID();
         when(courseService.updateCourse(eq(testCourseId), any(CoursePostDTO.class))).thenReturn("updated");
         mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
@@ -84,6 +86,15 @@ class CourseControllerTest {
                 .andExpect(status().isOk());
 
         verify(courseService).updateCourse(eq(testCourseId), any(CoursePostDTO.class));
+    }
+
+    @Test
+    void shouldFailToCallUpdateCourseServiceIfInvalid() throws Exception {
+        CoursePostDTO coursePostDTO = new CoursePostDTO();
+        UUID testCourseId = UUID.randomUUID();
+        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -150,10 +161,18 @@ class CourseControllerTest {
         verify(courseService).addCourse(coursePostDTOArgumentCaptor.capture());
     }
 
+    @Test
+    void shouldFailToCallAddCourseServiceIfInvalid() throws Exception {
+        CoursePostDTO coursePostDTO = new CoursePostDTO();
 
-    private static Page<Course> getCourses(int pageNumber) {
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
+        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(coursePostDTO)))
+                .andExpect(status().isBadRequest());
+    }
+
+    private static Page<CourseGetDTO> getCourses(int pageNumber) {
+        CourseGetDTO testCourse = new CourseGetDTO();
+        CourseGetDTO testCourse2 = new CourseGetDTO();
         String name = "Test Course";
         String description = "Test Description";
         int credit = 8;
@@ -165,9 +184,9 @@ class CourseControllerTest {
         testCourse2.setDescription(description);
         testCourse2.setCredit(credit);
 
-        List<Course> courses = Arrays.asList(testCourse, testCourse2);
+        List<CourseGetDTO> courses = Arrays.asList(testCourse, testCourse2);
         Pageable pageable = PageRequest.of(pageNumber, 2);
-        Page<Course> page = new PageImpl<>(courses, pageable, courses.size());
+        Page<CourseGetDTO> page = new PageImpl<>(courses, pageable, courses.size());
         return page;
     }
 }

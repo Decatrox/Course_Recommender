@@ -18,7 +18,7 @@ public class CourseController {
 
 
     @GetMapping("/discover/{pageNumber}")
-    public ResponseEntity<Page<Course>> recommendCourse(@PathVariable int pageNumber) {
+    public ResponseEntity<Page<CourseGetDTO>> recommendCourse(@PathVariable int pageNumber) {
         return ResponseEntity.ok(courseService.getRecommendedCourses(pageNumber));
     }
 
