@@ -17,27 +17,27 @@ public class CourseController {
     private final CourseService courseService;
 
 
-    @GetMapping("/discover/{pageNumber}")
+    @GetMapping("/paged/{pageNumber}")
     public ResponseEntity<Page<CourseGetDTO>> recommendCourse(@PathVariable int pageNumber) {
         return ResponseEntity.ok(courseService.getRecommendedCourses(pageNumber));
     }
 
-    @GetMapping("/view/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CourseGetDTO> viewCourse(@PathVariable UUID id) {
         return ResponseEntity.ok(courseService.viewCourse(id));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable UUID id, @Valid @RequestBody CoursePostDTO course) {
         return ResponseEntity.ok(courseService.updateCourse(id, course));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable UUID id) {
         return ResponseEntity.ok(courseService.deleteCourse(id));
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<String> addCourse(@Valid @RequestBody CoursePostDTO course) {
         return ResponseEntity.ok(courseService.addCourse(course));
     }

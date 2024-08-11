@@ -51,7 +51,7 @@ class CourseControllerTest {
         Page<CourseGetDTO> page = getCourses(pageNumber);
 
         org.mockito.Mockito.when(courseService.getRecommendedCourses(pageNumber)).thenReturn(page);
-        mockMvc.perform(get("/courses/discover/{pageNumber}", pageNumber))
+        mockMvc.perform(get("/courses/paged/{pageNumber}", pageNumber))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(page)));
 
@@ -67,7 +67,7 @@ class CourseControllerTest {
         courseGetDTO.setName(name); courseGetDTO.setDescription(description); courseGetDTO.setCredit(credit);
         org.mockito.Mockito.when(courseService.viewCourse(id)).thenReturn(courseGetDTO);
 
-        mockMvc.perform(get("/courses/view/{id}", id))
+        mockMvc.perform(get("/courses/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(courseGetDTO)));
 
@@ -81,7 +81,7 @@ class CourseControllerTest {
         coursePostDTO.setDescription("Test Description"); coursePostDTO.setCredit(6);
         UUID testCourseId = UUID.randomUUID();
         when(courseService.updateCourse(eq(testCourseId), any(CoursePostDTO.class))).thenReturn("updated");
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isOk());
 
@@ -92,7 +92,7 @@ class CourseControllerTest {
     void shouldFailToCallUpdateCourseServiceIfInvalid() throws Exception {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         UUID testCourseId = UUID.randomUUID();
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
@@ -100,27 +100,27 @@ class CourseControllerTest {
         coursePostDTO.setName("");
         coursePostDTO.setDescription("a");
         coursePostDTO.setCredit(6);
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
         //Blank Description
         coursePostDTO.setName("a");
         coursePostDTO.setDescription("");
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
         //Negative Credit
         coursePostDTO.setName("a");
         coursePostDTO.setCredit(-1);
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
         //More than 12 credits
         coursePostDTO.setCredit(14);
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
@@ -139,7 +139,7 @@ class CourseControllerTest {
         when(courseService.updateCourse(uuidArgumentCaptor.capture(), coursePostDTOArgumentCaptor.capture())).thenReturn("updated");
 
 
-        mockMvc.perform(put("/courses/update/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/courses/{id}", testCourseId).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isOk());
 
@@ -153,7 +153,7 @@ class CourseControllerTest {
         UUID testCourseId = UUID.randomUUID();
         when(courseService.deleteCourse(testCourseId)).thenReturn("deleted");
 
-        mockMvc.perform(delete("/courses/delete/{id}", testCourseId))
+        mockMvc.perform(delete("/courses/{id}", testCourseId))
                 .andExpect(status().isOk());
 
         verify(courseService).deleteCourse(testCourseId);
@@ -166,7 +166,7 @@ class CourseControllerTest {
         coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
         when(courseService.addCourse(any(CoursePostDTO.class))).thenReturn(name);
 
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isOk());
 
@@ -184,7 +184,7 @@ class CourseControllerTest {
         when(courseService.addCourse(coursePostDTOArgumentCaptor.capture())).thenReturn(name);
 
 
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isOk());
 
@@ -196,7 +196,7 @@ class CourseControllerTest {
         //All invalid
         CoursePostDTO coursePostDTO = new CoursePostDTO();
 
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
@@ -204,27 +204,27 @@ class CourseControllerTest {
         coursePostDTO.setName("");
         coursePostDTO.setDescription("a");
         coursePostDTO.setCredit(6);
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
         //Blank Description
         coursePostDTO.setName("a");
         coursePostDTO.setDescription("");
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
         //Negative Credit
         coursePostDTO.setName("a");
         coursePostDTO.setCredit(-1);
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
         //More than 12 credits
         coursePostDTO.setCredit(14);
-        mockMvc.perform(post("/courses/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/courses").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO)))
                 .andExpect(status().isBadRequest());
 
@@ -246,7 +246,6 @@ class CourseControllerTest {
 
         List<CourseGetDTO> courses = Arrays.asList(testCourse, testCourse2);
         Pageable pageable = PageRequest.of(pageNumber, 2);
-        Page<CourseGetDTO> page = new PageImpl<>(courses, pageable, courses.size());
-        return page;
+        return new PageImpl<>(courses, pageable, courses.size());
     }
 }

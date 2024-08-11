@@ -53,7 +53,7 @@ class AuthorControllerTest {
 
         doNothing().when(authorService).addAuthor(any(AuthorPostDTO.class));
 
-        mockMvc.perform(post("/authors/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/authors").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authorPostDTO)))
                 .andExpect(status().isOk());
 
@@ -73,7 +73,7 @@ class AuthorControllerTest {
         ArgumentCaptor<AuthorPostDTO> authorPostDTOArgumentCaptor = ArgumentCaptor.forClass(AuthorPostDTO.class);
         doNothing().when(authorService).addAuthor(authorPostDTOArgumentCaptor.capture());
 
-        mockMvc.perform(post("/authors/add").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/authors").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authorPostDTO)))
                 .andExpect(status().isOk());
 
@@ -88,7 +88,7 @@ class AuthorControllerTest {
 
         org.mockito.Mockito.when(authorService.getAuthorByEmail(email)).thenReturn(authorGetDTO);
 
-        mockMvc.perform(get("/authors/GetByEmail/{email}", email))
+        mockMvc.perform(get("/authors/{email}", email))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(authorGetDTO)));
 

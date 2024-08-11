@@ -14,12 +14,12 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public void addAuthor(@Valid @RequestBody AuthorPostDTO author) {
         authorService.addAuthor(author);
     }
 
-    @GetMapping("/GetByEmail/{email}")
+    @GetMapping("/{email}")
     public ResponseEntity<AuthorGetDTO> getAuthorByEmail(@PathVariable String email) {
         return ResponseEntity.ok(authorService.getAuthorByEmail(email));
     }
