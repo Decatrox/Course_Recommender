@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter @Setter @ToString
+@Data
 public class AuthorPostDTO {
 
     @JsonProperty("name")

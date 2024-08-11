@@ -1,12 +1,10 @@
 package com.sumerge.course_recommender.course;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 
-@Getter @Setter @ToString
+@Data
 public class CourseGetDTO {
 
     @JsonProperty("name")

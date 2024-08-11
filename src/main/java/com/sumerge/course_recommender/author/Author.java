@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Getter @Setter
+@Data
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Author {

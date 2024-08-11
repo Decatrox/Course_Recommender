@@ -4,17 +4,14 @@ import com.sumerge.course_recommender.assessment.Assessment;
 import com.sumerge.course_recommender.author.Author;
 import com.sumerge.course_recommender.rating.Rating;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
 
 
 @Entity
-@Getter @Setter
+@Data
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Course {
