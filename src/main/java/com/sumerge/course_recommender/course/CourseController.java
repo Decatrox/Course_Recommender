@@ -37,7 +37,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.deleteCourse(id));
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<String> addCourse(@Valid @RequestBody CoursePostDTO course) {
         return ResponseEntity.ok(courseService.addCourse(course));
     }
