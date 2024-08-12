@@ -1,8 +1,8 @@
 package com.sumerge.course_recommender.course;
 
+import com.sumerge.course_recommender.exception_handling.CourseAlreadyExistsException;
+import com.sumerge.course_recommender.exception_handling.CourseNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,12 +48,18 @@ class CourseServiceTest {
 
     @Test
     void itShouldGetRecommendedCourses() {
-        int pageNumber = 1;
-        Course testCourse2 = new Course();
+        int pageNumber = 0;
+        CourseGetDTO testCourse2 = new CourseGetDTO();
+//        CourseGetDTO testCourse3 = new CourseGetDTO();
         testCourse2.setName(name); testCourse2.setDescription(description); testCourse2.setCredit(credit);
-        List<Course> courses = Arrays.asList(testCourse, testCourse2);
+//        testCourse3.setName(name); testCourse3.setDescription(description); testCourse3.setCredit(credit);
+
+        List<CourseGetDTO> coursesDTO = Arrays.asList(testCourse2, testCourse2);
+        Page<CourseGetDTO> pageDTO = new PageImpl<>(coursesDTO);
+        List<Course> courses = Arrays.asList(testCourse, testCourse);
         Page<Course> page = new PageImpl<>(courses);
         org.mockito.Mockito.when(courseRecommender.recommendedCourses(pageNumber)).thenReturn(page);
+        org.mockito.Mockito.when(mapStructMapper.pageCourseToPageCourseGetDTO(page)).thenReturn(pageDTO);
 
         underTest.getRecommendedCourses(pageNumber);
 
@@ -88,7 +94,7 @@ class CourseServiceTest {
         coursePostDTO.setName(name);
         org.mockito.Mockito.when(courseRepository.existsByName(name)).thenReturn(true);
         assertThatThrownBy(() -> underTest.addCourse(coursePostDTO))
-                .isInstanceOf(EntityExistsException.class);
+                .isInstanceOf(CourseAlreadyExistsException.class);
 
     }
 
@@ -98,7 +104,9 @@ class CourseServiceTest {
         testCourse.setId(id);
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
+        org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(true);
         org.mockito.Mockito.when(courseRepository.getReferenceById(id)).thenReturn(testCourse);
+
         underTest.updateCourse(id, coursePostDTO);
 
         ArgumentCaptor<Course> courseArgumentCaptor = ArgumentCaptor.forClass(Course.class);
@@ -152,7 +160,7 @@ class CourseServiceTest {
         org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(false);
 
         assertThatThrownBy(() -> underTest.deleteCourse(id))
-                .isInstanceOf(EntityNotFoundException.class);
+                .isInstanceOf(CourseNotFoundException.class);
     }
 
     private Course createTestCourse(int num) {

@@ -22,8 +22,7 @@ public class CourseController {
     @Operation(summary = "Get courses with pagination")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course page returned successfully"),
-            @ApiResponse(responseCode = "404", description = "Not enough courses in the database to reach the" +
-                    " requested page number"),
+            @ApiResponse(responseCode = "404", description = "Course page not found"),
     })
     @GetMapping("/paged/{pageNumber}")
     public ResponseEntity<Page<CourseGetDTO>> recommendCourse(@PathVariable int pageNumber) {

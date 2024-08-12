@@ -1,9 +1,8 @@
 package com.sumerge.course_recommender.author;
 
 import com.sumerge.course_recommender.exception_handling.AuthorAlreadyExistsException;
+import com.sumerge.course_recommender.exception_handling.AuthorNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class AuthorService {
     public AuthorGetDTO getAuthorByEmail (String email) {
         Author author = authorRepository.findByEmail(email);
         if (author == null) {
-            throw new EntityNotFoundException();
+            throw new AuthorNotFoundException("No author with the email: " + email);
         }
         return mapStructMapper.authorToAuthorGetDTO(author);
     }

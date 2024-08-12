@@ -29,6 +29,9 @@ class AuthorControllerTest {
     @Mock
     private AuthorService authorService;
 
+    @Mock
+    private AuthorRepository authorRepository;
+
     @InjectMocks
     private AuthorController underTest;
 
@@ -79,6 +82,24 @@ class AuthorControllerTest {
 
         verify(authorService).addAuthor(authorPostDTOArgumentCaptor.capture());
     }
+
+//    //Integration Test
+//    @Test
+//    void itShouldNotAddDuplicateAuthor() throws Exception {
+//        String dateString = "2024-08-06 09:36:24.000000";
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+//        String name = "Author Name"; String email = "author@gmail.com";
+//        Date birthdate = dateFormat.parse(dateString);
+//        AuthorPostDTO authorPostDTO = new AuthorPostDTO();
+//        authorPostDTO.setName(name); authorPostDTO.setEmail(email); authorPostDTO.setBirthdate(birthdate);
+//
+//        org.mockito.Mockito.when(authorRepository.existsByEmail(any(String.class))).thenReturn(true);
+////        System.out.println(authorRepository.existsByEmail(authorPostDTO.getEmail()));
+//        mockMvc.perform(post("/authors")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(authorPostDTO)))
+//                .andExpect(status().isConflict());
+//    }
 
     @Test
     void getAuthorByEmail() throws Exception {
