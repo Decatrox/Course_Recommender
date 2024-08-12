@@ -1,7 +1,5 @@
 package com.sumerge.course_recommender.exception_handling;
 
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -29,9 +27,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
-        return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+    @ExceptionHandler(AuthorNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleAuthorNotFoundException(AuthorNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Not Found");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleCourseNotFoundException(CourseNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Not Found");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AuthorAlreadyExistsException.class)
@@ -42,11 +51,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(CourseAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleCourseAlreadyExistsException(CourseAlreadyExistsException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Conflict");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
-//    @ExceptionHandler(EntityExistsException.class)
-//    public ResponseEntity<String> handleEntityExistsException(EntityExistsException ex) {
-//        return new ResponseEntity<>(ex.getMessage() + "already exists", HttpStatus.CONFLICT);
-//    }
+    @ExceptionHandler(PageNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlePageNotFoundException(PageNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Not Found");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
