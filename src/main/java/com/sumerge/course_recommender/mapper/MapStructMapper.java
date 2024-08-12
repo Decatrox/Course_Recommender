@@ -6,7 +6,10 @@ import com.sumerge.course_recommender.author.AuthorPostDTO;
 import com.sumerge.course_recommender.course.Course;
 import com.sumerge.course_recommender.course.CourseGetDTO;
 import com.sumerge.course_recommender.course.CoursePostDTO;
+import com.sumerge.course_recommender.user.AppUser;
+import com.sumerge.course_recommender.user.UserDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -21,6 +24,10 @@ public interface MapStructMapper {
     Course coursePostDTOToCourse(CoursePostDTO coursePostDTO);
     AuthorGetDTO authorToAuthorGetDTO(Author author);
     Author authorPostDTOToAuthor(AuthorPostDTO authorPostDTO);
+
+    @Mapping(source = "userName", target = "userName")
+    @Mapping(source = "password", target = "password")
+    AppUser userDTOToAppUser(UserDTO user);
 
      default Page<CourseGetDTO> pageCourseToPageCourseGetDTO(Page<Course> coursePage) {
         List<CourseGetDTO> courseGetDTOList = coursePage
