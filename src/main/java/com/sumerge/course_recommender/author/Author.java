@@ -28,5 +28,4 @@ public class Author {
 
     @ManyToMany
     private List<Course> courses;
-
 }

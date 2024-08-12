@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class CourseGetDTO {
-
     @JsonProperty("name")
     private String name;
 
@@ -15,5 +14,4 @@ public class CourseGetDTO {
 
     @JsonProperty("credit")
     private int credit;
-
 }
