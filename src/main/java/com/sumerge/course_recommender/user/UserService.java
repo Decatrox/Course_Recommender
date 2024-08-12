@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.user;
 
+import com.sumerge.course_recommender.exception_handling.UserAlreadyExistsException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,12 +12,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private MapStructMapper mapStructMapper;
+    private final MapStructMapper mapStructMapper;
 
     public AppUser register(UserDTO user) {
-        System.out.println("Omar printed here " + user.getPassword() + "  " + user.getUserName());
+        if (userRepository.existsByUserName(user.getUserName())){
+            throw new UserAlreadyExistsException("User with the username: " + user.getUserName() + " already exists");
+        }
         AppUser appUser = mapStructMapper.userDTOToAppUser(user);
-        System.out.println("Omar printed here again " + appUser.getPassword() + "  " + appUser.getUserName());
         appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
         return userRepository.save(appUser);
     }

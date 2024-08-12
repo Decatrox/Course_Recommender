@@ -30,7 +30,7 @@ public class AuthorController {
     @Operation(summary = "Get an author by email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Author found"),
-            @ApiResponse(responseCode = "404", description = "Author not found"),
+            @ApiResponse(responseCode = "404", description = "Author already exists"),
     })
     @GetMapping("/{email}")
     public ResponseEntity<AuthorGetDTO> getAuthorByEmail(@PathVariable String email) {

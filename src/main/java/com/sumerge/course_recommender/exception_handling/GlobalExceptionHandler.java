@@ -51,6 +51,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Conflict");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(CourseAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleCourseAlreadyExistsException(CourseAlreadyExistsException ex) {
         Map<String, String> errorResponse = new HashMap<>();
