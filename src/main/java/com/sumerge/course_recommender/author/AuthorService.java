@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.author;
 
+import com.sumerge.course_recommender.exception_handling.AuthorAlreadyExistsException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,7 +18,8 @@ public class AuthorService {
 
     public void addAuthor (AuthorPostDTO author) {
         if (authorRepository.existsByEmail(author.getEmail())){
-            throw new EntityExistsException("Author with this Email ");
+            throw new AuthorAlreadyExistsException("An author with the email: "
+                    + author.getEmail() + " already exists");
         }
         authorRepository.save(mapStructMapper.authorPostDTOToAuthor(author));
     }

@@ -34,10 +34,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<String> handleEntityExistsException(EntityExistsException ex) {
-        return new ResponseEntity<>(ex.getMessage() + "already exists", HttpStatus.CONFLICT);
+    @ExceptionHandler(AuthorAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleAuthorAlreadyExistsException(AuthorAlreadyExistsException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Conflict");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
+
+
+//    @ExceptionHandler(EntityExistsException.class)
+//    public ResponseEntity<String> handleEntityExistsException(EntityExistsException ex) {
+//        return new ResponseEntity<>(ex.getMessage() + "already exists", HttpStatus.CONFLICT);
+//    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
