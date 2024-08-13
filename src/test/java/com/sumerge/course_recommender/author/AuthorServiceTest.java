@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 class AuthorServiceTest {
 
     @InjectMocks
-    private AuthorService underTest;
+    private AuthorService authorService;
 
     @Mock
     private MapStructMapper mapStructMapper;
@@ -35,7 +35,7 @@ class AuthorServiceTest {
 
         org.mockito.Mockito.when(mapStructMapper.authorPostDTOToAuthor(authorPostDTO)).thenReturn(author);
 
-        underTest.addAuthor(authorPostDTO);
+        authorService.addAuthor(authorPostDTO);
 
         ArgumentCaptor<Author> authorCaptor = ArgumentCaptor.forClass(Author.class);
         org.mockito.Mockito.verify(authorRepository).save(authorCaptor.capture());
@@ -66,14 +66,14 @@ class AuthorServiceTest {
         org.mockito.Mockito.when(authorRepository.findByEmail(email)).thenReturn(author);
         org.mockito.Mockito.when(mapStructMapper.authorToAuthorGetDTO(author)).thenReturn(authorGetDTO);
 
-        AuthorGetDTO returnedAuthor = underTest.getAuthorByEmail(email);
+        AuthorGetDTO returnedAuthor = authorService.getAuthorByEmail(email);
 
         assertThat(returnedAuthor).usingRecursiveComparison().ignoringFields("id").isEqualTo(author);
 
         //Test if Author is null
         String invalidEmail = "a";
         org.mockito.Mockito.when(authorRepository.findByEmail(invalidEmail)).thenReturn(null);
-        assertThatThrownBy(() -> underTest.getAuthorByEmail(invalidEmail))
+        assertThatThrownBy(() -> authorService.getAuthorByEmail(invalidEmail))
                 .isInstanceOf(AuthorNotFoundException.class);
 
     }

@@ -26,65 +26,65 @@ class GlobalExceptionHandlerTest {
     private BindingResult bindingResult;
 
 //    @InjectMocks
-    GlobalExceptionHandler underTest;
+    GlobalExceptionHandler globalExceptionHandler;
 
     @Test
     void shouldHandleValidationExceptionsAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
+        globalExceptionHandler = new GlobalExceptionHandler();
         FieldError fieldError = new FieldError("Test Object Name (Course)", "Test Field Name (name)", "Test Message (name can't be null)");
         org.mockito.Mockito.when(bindingResult.getAllErrors()).thenReturn(List.of(fieldError));
         ArrayList<String> messages = new ArrayList<>();
         messages.add("Test Message (name can't be null)");
 
         MethodArgumentNotValidException ex = new MethodArgumentNotValidException(null, bindingResult);
-        ResponseEntity<Map<String, ArrayList<String>>> res = underTest.handleValidationExceptions(ex);
+        ResponseEntity<Map<String, ArrayList<String>>> res = globalExceptionHandler.handleValidationExceptions(ex);
 
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(res.getBody().get("Test Field Name (name)")).isEqualTo((messages));
+        assertThat(res.getBody()).containsEntry("Test Field Name (name)", messages);
     }
 
 
     @Test
     void shouldHandleHttpMessageNotReadableExceptionAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
-        ResponseEntity<String> res = underTest.handleHttpMessageNotReadableException(new HttpMessageNotReadableException(""));
+        globalExceptionHandler = new GlobalExceptionHandler();
+        ResponseEntity<String> res = globalExceptionHandler.handleHttpMessageNotReadableException(new HttpMessageNotReadableException(""));
         assertThat(res.getBody()).isNotEmpty();
     }
 
     @Test
     void shouldHandleAlreadyExistsExceptionAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
+        globalExceptionHandler = new GlobalExceptionHandler();
         //Author
-        ResponseEntity<Map<String, String>> response = underTest.handleAlreadyExistsException(new AuthorAlreadyExistsException(""));
+        ResponseEntity<Map<String, String>> response = globalExceptionHandler.handleAlreadyExistsException(new AuthorAlreadyExistsException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
 
         //Course
-        response = underTest.handleAlreadyExistsException(new CourseAlreadyExistsException(""));
+        response = globalExceptionHandler.handleAlreadyExistsException(new CourseAlreadyExistsException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
 
         //User
-        response = underTest.handleAlreadyExistsException(new UserAlreadyExistsException(""));
+        response = globalExceptionHandler.handleAlreadyExistsException(new UserAlreadyExistsException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
 
     @Test
     void shouldHandleNotFoundExceptionAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
+        globalExceptionHandler = new GlobalExceptionHandler();
         //Author
-        ResponseEntity<Map<String, String>> response = underTest.handleNotFoundException(new AuthorNotFoundException(""));
+        ResponseEntity<Map<String, String>> response = globalExceptionHandler.handleNotFoundException(new AuthorNotFoundException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
         //Course
-        response = underTest.handleNotFoundException(new CourseNotFoundException(""));
+        response = globalExceptionHandler.handleNotFoundException(new CourseNotFoundException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
         //Page
-        response = underTest.handleNotFoundException(new PageNotFoundException(""));
+        response = globalExceptionHandler.handleNotFoundException(new PageNotFoundException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 

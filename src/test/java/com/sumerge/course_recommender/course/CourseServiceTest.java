@@ -24,7 +24,7 @@ import java.util.*;
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
     @InjectMocks
-    private CourseService underTest;
+    private CourseService courseService;
 
     @Mock
     private CourseRepository courseRepository;
@@ -61,7 +61,7 @@ class CourseServiceTest {
         org.mockito.Mockito.when(courseRecommender.recommendedCourses(pageNumber)).thenReturn(page);
         org.mockito.Mockito.when(mapStructMapper.pageCourseToPageCourseGetDTO(page)).thenReturn(pageDTO);
 
-        underTest.getRecommendedCourses(pageNumber);
+        courseService.getRecommendedCourses(pageNumber);
 
         ArgumentCaptor<Integer> pageNumberArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
         verify(courseRecommender).recommendedCourses(pageNumberArgumentCaptor.capture());
@@ -78,7 +78,7 @@ class CourseServiceTest {
         org.mockito.Mockito.when(mapStructMapper.coursePostDTOToCourse(coursePostDTO)).thenReturn(testCourse);
         org.mockito.Mockito.when(courseRepository.existsByName(name)).thenReturn(false);
 
-        underTest.addCourse(coursePostDTO);
+        courseService.addCourse(coursePostDTO);
 
         ArgumentCaptor<Course> courseArgumentCaptor = ArgumentCaptor.forClass(Course.class);
         verify(courseRepository).save(courseArgumentCaptor.capture());
@@ -93,7 +93,7 @@ class CourseServiceTest {
         CoursePostDTO coursePostDTO = new CoursePostDTO();
         coursePostDTO.setName(name);
         org.mockito.Mockito.when(courseRepository.existsByName(name)).thenReturn(true);
-        assertThatThrownBy(() -> underTest.addCourse(coursePostDTO))
+        assertThatThrownBy(() -> courseService.addCourse(coursePostDTO))
                 .isInstanceOf(CourseAlreadyExistsException.class);
 
     }
@@ -107,7 +107,7 @@ class CourseServiceTest {
         org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(true);
         org.mockito.Mockito.when(courseRepository.getReferenceById(id)).thenReturn(testCourse);
 
-        underTest.updateCourse(id, coursePostDTO);
+        courseService.updateCourse(id, coursePostDTO);
 
         ArgumentCaptor<Course> courseArgumentCaptor = ArgumentCaptor.forClass(Course.class);
         verify(courseRepository).save(courseArgumentCaptor.capture());
@@ -127,7 +127,7 @@ class CourseServiceTest {
         org.mockito.Mockito.when(courseRepository.findById(id)).thenReturn(Optional.of(testCourse));
         org.mockito.Mockito.when(mapStructMapper.courseToCourseGetDTO(testCourse)).thenReturn(courseGetDTO);
 
-        CourseGetDTO returnedCourse = underTest.viewCourse(id);
+        CourseGetDTO returnedCourse = courseService.viewCourse(id);
 
         assertThat(returnedCourse).usingRecursiveComparison().ignoringFields("id").isEqualTo(testCourse);
 
@@ -142,7 +142,7 @@ class CourseServiceTest {
         org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(true);
         org.mockito.Mockito.doNothing().when(courseRepository).deleteById(id);
 
-        underTest.deleteCourse(id);
+        courseService.deleteCourse(id);
 
         ArgumentCaptor<UUID> idArgumentCaptor = ArgumentCaptor.forClass(UUID.class);
         verify(courseRepository).deleteById(idArgumentCaptor.capture());
@@ -159,7 +159,7 @@ class CourseServiceTest {
 
         org.mockito.Mockito.when(courseRepository.existsById(id)).thenReturn(false);
 
-        assertThatThrownBy(() -> underTest.deleteCourse(id))
+        assertThatThrownBy(() -> courseService.deleteCourse(id))
                 .isInstanceOf(CourseNotFoundException.class);
     }
 

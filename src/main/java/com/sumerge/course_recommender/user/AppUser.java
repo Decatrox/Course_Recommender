@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Table
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
-public class AppUser {
+public class AppUser implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -33,7 +33,7 @@ class CourseControllerTest {
     private CourseService courseService;
 
     @InjectMocks
-    private CourseController underTest;
+    private CourseController courseController;
 
     private MockMvc mockMvc;
 
@@ -41,7 +41,7 @@ class CourseControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(underTest).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(courseController).build();
     }
 
 

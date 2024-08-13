@@ -33,7 +33,7 @@ class AuthorControllerTest {
     private AuthorRepository authorRepository;
 
     @InjectMocks
-    private AuthorController underTest;
+    private AuthorController authorController;
 
     private MockMvc mockMvc;
 
@@ -41,7 +41,7 @@ class AuthorControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(underTest).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController).build();
     }
 
     @Test

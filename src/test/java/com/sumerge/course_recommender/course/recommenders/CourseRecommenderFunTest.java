@@ -20,21 +20,21 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CourseRecommenderFunTest {
 
-    private CourseRecommenderFun underTest;
+    private CourseRecommenderFun courseRecommenderFun;
 
     @Mock
     private CourseRepository courseRepository;
 
     @Test
     void getsRecommendedCourses() {
-        underTest = new CourseRecommenderFun(courseRepository);
+        courseRecommenderFun = new CourseRecommenderFun(courseRepository);
         int pageNumber = 1;
 //        Page<Course> page = getCourses();
         Page<Course> page = getCourses(pageNumber);
         Pageable pageable = PageRequest.of(pageNumber, 2);
         when(courseRepository.findAll(pageable)).thenReturn(page);
 
-        Page<Course> returnedPage = underTest.recommendedCourses(pageNumber);
+        Page<Course> returnedPage = courseRecommenderFun.recommendedCourses(pageNumber);
 
         assertThat(returnedPage).isEqualTo(page);
 
