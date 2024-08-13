@@ -23,7 +23,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-
 class MapStructMapperTest {
 
     private MapStructMapper mapStructMapper;

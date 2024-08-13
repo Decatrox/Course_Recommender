@@ -25,7 +25,6 @@ class GlobalExceptionHandlerTest {
     @Mock
     private BindingResult bindingResult;
 
-//    @InjectMocks
     GlobalExceptionHandler globalExceptionHandler;
 
     @Test

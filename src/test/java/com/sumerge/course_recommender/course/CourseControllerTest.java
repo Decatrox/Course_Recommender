@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@WebMvcTest(controllers = CourseController.class)
-//@AutoConfigureMockMvc(addFilters = false) //to bypass if there is security implemented
+
 @ExtendWith(MockitoExtension.class)
 class CourseControllerTest {
     @Mock

@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
 import java.util.*;
 
 
-//@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
     @InjectMocks
