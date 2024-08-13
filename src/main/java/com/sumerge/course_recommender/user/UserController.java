@@ -22,7 +22,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User already exists"),
     })
     @PostMapping
-    public AppUser registerUser(@RequestBody UserDTO user) {
+    public AppUser registerUser(@RequestBody UserPostDTO user) {
         return userService.register(user);
     }
 

@@ -2,6 +2,7 @@ package com.sumerge.course_recommender.course;
 
 import com.sumerge.course_recommender.exception_handling.custom_exceptions.CourseAlreadyExistsException;
 import com.sumerge.course_recommender.exception_handling.custom_exceptions.CourseNotFoundException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.PageNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 import java.util.*;
@@ -50,9 +52,7 @@ class CourseServiceTest {
     void itShouldGetRecommendedCourses() {
         int pageNumber = 0;
         CourseGetDTO testCourse2 = new CourseGetDTO();
-//        CourseGetDTO testCourse3 = new CourseGetDTO();
         testCourse2.setName(name); testCourse2.setDescription(description); testCourse2.setCredit(credit);
-//        testCourse3.setName(name); testCourse3.setDescription(description); testCourse3.setCredit(credit);
 
         List<CourseGetDTO> coursesDTO = Arrays.asList(testCourse2, testCourse2);
         Page<CourseGetDTO> pageDTO = new PageImpl<>(coursesDTO);
@@ -69,6 +69,16 @@ class CourseServiceTest {
 
         assertThat(queriedPageNumber).isEqualTo(pageNumber);
 
+    }
+
+    @Test
+    void itShouldThrowExceptionWhenPageDoesNotExist() {
+        Page<CourseGetDTO> pageDTO = Page.empty();
+        Page<Course> page = Page.empty();
+        when(courseRecommender.recommendedCourses(1)).thenReturn(page);
+        when(mapStructMapper.pageCourseToPageCourseGetDTO(page)).thenReturn(pageDTO);
+        assertThatThrownBy(() -> courseService.getRecommendedCourses(1))
+                .isInstanceOf(PageNotFoundException.class);
     }
 
     @Test
@@ -114,6 +124,16 @@ class CourseServiceTest {
         Course savedCourse = courseArgumentCaptor.getValue();
 
         assertThat(savedCourse).isEqualTo(testCourse);
+    }
+
+    @Test
+    void itShouldFailToUpdateCourseThatDoesNotExist(){
+        CoursePostDTO coursePostDTO = new CoursePostDTO();
+        UUID id = UUID.randomUUID();
+
+        when(courseRepository.existsById(id)).thenReturn(false);
+        assertThatThrownBy(() -> courseService.updateCourse(id, coursePostDTO))
+                .isInstanceOf(CourseNotFoundException.class);
     }
 
     @Test

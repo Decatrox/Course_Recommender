@@ -6,6 +6,8 @@ import com.sumerge.course_recommender.author.AuthorPostDTO;
 import com.sumerge.course_recommender.course.Course;
 import com.sumerge.course_recommender.course.CourseGetDTO;
 import com.sumerge.course_recommender.course.CoursePostDTO;
+import com.sumerge.course_recommender.user.AppUser;
+import com.sumerge.course_recommender.user.UserPostDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -93,6 +95,21 @@ class MapStructMapperTest {
         testAuthor = null;
         authorGetDTO = mapStructMapper.authorToAuthorGetDTO(testAuthor);
         assertThat(authorGetDTO).isNull();
+    }
+
+    @Test
+    void itShouldMapUserPostDTOToUser() {
+        UserPostDTO userPostDTO = new UserPostDTO();
+        userPostDTO.setUserName("Name");
+        userPostDTO.setPassword("Password");
+
+        AppUser user = mapStructMapper.userPostDTOToAppUser(userPostDTO);
+        assertThat(userPostDTO).usingRecursiveComparison().ignoringFields("id").isEqualTo(user);
+
+        //test null
+        userPostDTO = null;
+        user = mapStructMapper.userPostDTOToAppUser(userPostDTO);
+        assertThat(user).isNull();
     }
 
     @Test

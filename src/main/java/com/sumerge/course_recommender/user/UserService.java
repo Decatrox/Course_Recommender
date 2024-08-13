@@ -14,11 +14,11 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MapStructMapper mapStructMapper;
 
-    public AppUser register(UserDTO user) {
+    public AppUser register(UserPostDTO user) {
         if (userRepository.existsByUserName(user.getUserName())){
             throw new UserAlreadyExistsException("User with the username: " + user.getUserName() + " already exists");
         }
-        AppUser appUser = mapStructMapper.userDTOToAppUser(user);
+        AppUser appUser = mapStructMapper.userPostDTOToAppUser(user);
         appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
         return userRepository.save(appUser);
     }

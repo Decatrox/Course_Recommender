@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserPostDTO {
     @Column
     private String userName;
 

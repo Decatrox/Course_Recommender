@@ -19,8 +19,8 @@ public class CourseService {
     private final CourseRecommender courseRecommender;
     private final CourseRepository courseRepository;
     private final MapStructMapper mapStructMapper;
-    private final static String COURSE_WITH_ID = "Course with id: ";
-    private final static String DOES_NOT_EXIST = " does not exist";
+    private static final String COURSE_WITH_ID = "Course with id: ";
+    private static final String DOES_NOT_EXIST = " does not exist";
 
 
     public Page<CourseGetDTO> getRecommendedCourses(int pageNumber) {

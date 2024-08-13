@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.author;
 
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.AuthorAlreadyExistsException;
 import com.sumerge.course_recommender.exception_handling.custom_exceptions.AuthorNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import org.junit.jupiter.api.Test;
@@ -44,16 +45,16 @@ class AuthorServiceTest {
         assertThat(authorSaved).isEqualTo(author);
     }
 
-//    @Test
-//    void itShouldNotAddDuplicateAuthor() {
-//        AuthorPostDTO authorPostDTO = new AuthorPostDTO();
-//        String email = "author@gmail.com";
-//        authorPostDTO.setEmail(email);
-//        org.mockito.Mockito.when(authorRepository.existsByEmail(email)).thenReturn(true);
-//        assertThatThrownBy(() -> underTest.addAuthor(authorPostDTO))
-//                .isInstanceOf(AuthorAlreadyExistsException.class);
-//
-//    }
+    @Test
+    void itShouldNotAddDuplicateAuthor() {
+        AuthorPostDTO authorPostDTO = new AuthorPostDTO();
+        String email = "author@gmail.com";
+        authorPostDTO.setEmail(email);
+        org.mockito.Mockito.when(authorRepository.existsByEmail(email)).thenReturn(true);
+        assertThatThrownBy(() -> authorService.addAuthor(authorPostDTO))
+                .isInstanceOf(AuthorAlreadyExistsException.class);
+
+    }
 
     @Test
     void itShouldGetAuthorByEmail() {
