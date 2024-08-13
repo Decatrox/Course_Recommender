@@ -10,8 +10,8 @@ import java.util.Collections;
 
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
-
     private AppUser user;
+
 
     @Override
     public String getUsername() {
