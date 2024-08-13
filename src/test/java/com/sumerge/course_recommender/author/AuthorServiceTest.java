@@ -1,6 +1,6 @@
 package com.sumerge.course_recommender.author;
 
-import com.sumerge.course_recommender.exception_handling.AuthorNotFoundException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.AuthorNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

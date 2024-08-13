@@ -1,7 +1,7 @@
 package com.sumerge.course_recommender.course;
 
-import com.sumerge.course_recommender.exception_handling.CourseAlreadyExistsException;
-import com.sumerge.course_recommender.exception_handling.CourseNotFoundException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.CourseAlreadyExistsException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.CourseNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

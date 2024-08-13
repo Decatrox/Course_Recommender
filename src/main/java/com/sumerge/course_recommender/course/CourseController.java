@@ -29,6 +29,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getRecommendedCourses(pageNumber));
     }
 
+
     @Operation(summary = "View a course by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course found"),
@@ -38,6 +39,7 @@ public class CourseController {
     public ResponseEntity<CourseGetDTO> viewCourse(@PathVariable UUID id) {
         return ResponseEntity.ok(courseService.viewCourse(id));
     }
+
 
     @Operation(summary = "Update a course by ID")
     @ApiResponses(value = {
@@ -50,6 +52,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.updateCourse(id, course));
     }
 
+
     @Operation(summary = "Delete a course by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course deleted successfully"),
@@ -59,6 +62,7 @@ public class CourseController {
     public ResponseEntity<String> deleteCourse(@PathVariable UUID id) {
         return ResponseEntity.ok(courseService.deleteCourse(id));
     }
+
 
     @Operation(summary = "Add a new course")
     @ApiResponses(value = {

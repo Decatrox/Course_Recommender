@@ -1,6 +1,6 @@
 package com.sumerge.course_recommender.user;
 
-import com.sumerge.course_recommender.exception_handling.UserAlreadyExistsException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.UserAlreadyExistsException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

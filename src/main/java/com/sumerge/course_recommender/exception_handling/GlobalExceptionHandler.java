@@ -1,5 +1,6 @@
 package com.sumerge.course_recommender.exception_handling;
 
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -27,58 +28,40 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(AuthorNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleAuthorNotFoundException(AuthorNotFoundException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Not Found");
-        errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    @ExceptionHandler({
+            AuthorNotFoundException.class,
+            CourseNotFoundException.class,
+            PageNotFoundException.class
+    })
+    public ResponseEntity<Map<String, String>> handleNotFoundException(RuntimeException ex) {
+        return buildErrorResponse("Not Found", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CourseNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleCourseNotFoundException(CourseNotFoundException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Not Found");
-        errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+    @ExceptionHandler({
+            AuthorAlreadyExistsException.class,
+            CourseAlreadyExistsException.class,
+            UserAlreadyExistsException.class,
+
+    })
+    public ResponseEntity<Map<String, String>> handleAlreadyExistsException(RuntimeException ex) {
+        return buildErrorResponse("Conflict", ex.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(AuthorAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleAuthorAlreadyExistsException(AuthorAlreadyExistsException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Conflict");
-        errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Conflict");
-        errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(CourseAlreadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleCourseAlreadyExistsException(CourseAlreadyExistsException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Conflict");
-        errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(PageNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handlePageNotFoundException(PageNotFoundException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Not Found");
-        errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         String errorMessage = "Invalid JSON format: " + ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+
+    private ResponseEntity<Map<String, String>> buildErrorResponse(String error, String message, HttpStatus status) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", error);
+        errorResponse.put("message", message);
+        return new ResponseEntity<>(errorResponse, status);
     }
 }
 

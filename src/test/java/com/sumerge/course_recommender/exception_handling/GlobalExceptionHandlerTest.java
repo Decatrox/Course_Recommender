@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.exception_handling;
 
 
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -51,43 +52,41 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void shouldHandleAuthorAlreadyExistsExceptionAndReturnErrorMessage() {
+    void shouldHandleAlreadyExistsExceptionAndReturnErrorMessage() {
         underTest = new GlobalExceptionHandler();
-        ResponseEntity<Map<String, String>> response = underTest.handleAuthorAlreadyExistsException(new AuthorAlreadyExistsException(""));
+        //Author
+        ResponseEntity<Map<String, String>> response = underTest.handleAlreadyExistsException(new AuthorAlreadyExistsException(""));
         assertThat(response.getBody()).isNotEmpty();
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT); // Assuming CONFLICT for AuthorAlreadyExists
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+
+        //Course
+        response = underTest.handleAlreadyExistsException(new CourseAlreadyExistsException(""));
+        assertThat(response.getBody()).isNotEmpty();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+
+        //User
+        response = underTest.handleAlreadyExistsException(new UserAlreadyExistsException(""));
+        assertThat(response.getBody()).isNotEmpty();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
 
     @Test
-    void shouldHandleAuthorNotFoundExceptionAndReturnErrorMessage() {
+    void shouldHandleNotFoundExceptionAndReturnErrorMessage() {
         underTest = new GlobalExceptionHandler();
-        ResponseEntity<Map<String, String>> response = underTest.handleAuthorNotFoundException(new AuthorNotFoundException(""));
+        //Author
+        ResponseEntity<Map<String, String>> response = underTest.handleNotFoundException(new AuthorNotFoundException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
 
-    @Test
-    void shouldHandleCourseAlreadyExistsExceptionAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
-        ResponseEntity<Map<String, String>> response = underTest.handleCourseAlreadyExistsException(new CourseAlreadyExistsException(""));
-        assertThat(response.getBody()).isNotEmpty();
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT); // Assuming CONFLICT for CourseAlreadyExists
-    }
-
-    @Test
-    void shouldHandleCourseNotFoundExceptionAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
-        ResponseEntity<Map<String, String>> response = underTest.handleCourseNotFoundException(new CourseNotFoundException(""));
+        //Course
+        response = underTest.handleNotFoundException(new CourseNotFoundException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
 
-    @Test
-    void shouldHandlePageNotFoundExceptionAndReturnErrorMessage() {
-        underTest = new GlobalExceptionHandler();
-        ResponseEntity<Map<String, String>> response = underTest.handlePageNotFoundException(new PageNotFoundException(""));
+        //Page
+        response = underTest.handleNotFoundException(new PageNotFoundException(""));
         assertThat(response.getBody()).isNotEmpty();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
 
+    }
 }

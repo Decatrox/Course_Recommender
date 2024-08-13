@@ -1,7 +1,7 @@
 package com.sumerge.course_recommender.author;
 
-import com.sumerge.course_recommender.exception_handling.AuthorAlreadyExistsException;
-import com.sumerge.course_recommender.exception_handling.AuthorNotFoundException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.AuthorAlreadyExistsException;
+import com.sumerge.course_recommender.exception_handling.custom_exceptions.AuthorNotFoundException;
 import com.sumerge.course_recommender.mapper.MapStructMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

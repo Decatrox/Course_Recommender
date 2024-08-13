@@ -17,6 +17,7 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
+
     @Operation(summary = "Add a new author")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Author added successfully"),
@@ -26,6 +27,7 @@ public class AuthorController {
     public void addAuthor(@Valid @RequestBody AuthorPostDTO author) {
         authorService.addAuthor(author);
     }
+
 
     @Operation(summary = "Get an author by email")
     @ApiResponses(value = {
