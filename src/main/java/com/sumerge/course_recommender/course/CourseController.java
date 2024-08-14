@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/courses")
 @AllArgsConstructor
+@Slf4j
 public class CourseController {
 
     private final CourseService courseService;
@@ -26,6 +28,7 @@ public class CourseController {
     })
     @GetMapping("/paged/{pageNumber}")
     public ResponseEntity<Page<CourseGetDTO>> recommendCourse(@PathVariable int pageNumber) {
+        log.info("CourseController-Get courses with pagination");
         return ResponseEntity.ok(courseService.getRecommendedCourses(pageNumber));
     }
 
@@ -37,6 +40,7 @@ public class CourseController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<CourseGetDTO> viewCourse(@PathVariable UUID id) {
+        log.info("CourseController-View course by ID");
         return ResponseEntity.ok(courseService.viewCourse(id));
     }
 
@@ -49,6 +53,7 @@ public class CourseController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable UUID id, @Valid @RequestBody CoursePostDTO course) {
+        log.info("CourseController-Update course by ID");
         return ResponseEntity.ok(courseService.updateCourse(id, course));
     }
 
@@ -60,6 +65,7 @@ public class CourseController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable UUID id) {
+        log.info("CourseController-Delete course by ID");
         return ResponseEntity.ok(courseService.deleteCourse(id));
     }
 
@@ -71,6 +77,7 @@ public class CourseController {
     })
     @PostMapping
     public ResponseEntity<String> addCourse(@Valid @RequestBody CoursePostDTO course) {
+        log.info("CourseController-Add course data");
         return ResponseEntity.ok(courseService.addCourse(course));
     }
 }

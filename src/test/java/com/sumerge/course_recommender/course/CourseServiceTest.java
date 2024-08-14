@@ -136,6 +136,21 @@ class CourseServiceTest {
     }
 
     @Test
+    void itShouldFailToUpdateCourseToADuplicateName(){
+        CoursePostDTO coursePostDTO = new CoursePostDTO();
+        UUID id = UUID.randomUUID();
+        coursePostDTO.setName(name); coursePostDTO.setDescription(description); coursePostDTO.setCredit(credit);
+        Course courseUpdate = new Course();
+        courseUpdate.setName(name + " ");
+
+        when(courseRepository.existsById(id)).thenReturn(true);
+        when(courseRepository.existsByName(name)).thenReturn(true);
+        when(courseRepository.getById(id)).thenReturn(courseUpdate);
+        assertThatThrownBy(() -> courseService.updateCourse(id, coursePostDTO))
+                .isInstanceOf(CourseAlreadyExistsException.class);
+    }
+
+    @Test
     void itShouldViewCourseById() {
         UUID id = UUID.randomUUID();
         testCourse.setId(id);
