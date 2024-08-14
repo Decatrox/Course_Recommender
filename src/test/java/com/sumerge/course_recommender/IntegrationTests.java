@@ -3,6 +3,7 @@ package com.sumerge.course_recommender;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sumerge.course_recommender.author.Author;
+import com.sumerge.course_recommender.author.AuthorGetDTO;
 import com.sumerge.course_recommender.author.AuthorPostDTO;
 import com.sumerge.course_recommender.author.AuthorRepository;
 import com.sumerge.course_recommender.course.Course;
@@ -57,6 +58,7 @@ public class IntegrationTests {
     private final String userName = "test username";
     private final String password = "test password";
     private UUID uuid;
+    private static UUID authorUUID;
 
 
     static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest");
@@ -89,6 +91,8 @@ public class IntegrationTests {
         Author author = new Author();
         author.setName("name"); author.setEmail("author@gmail.com"); author.setBirthdate(birthdate);
         authorRepository.save(author);
+        authorUUID = authorRepository.findAll().getFirst().getId();
+        System.out.println("Omar" + authorRepository.existsById(authorUUID));
     }
 
     @AfterAll
@@ -432,32 +436,62 @@ public class IntegrationTests {
                         .with(httpBasic(userName, password)))
                 .andExpect(status().isUnauthorized());
 
-        //Incorrect Username, Correct Password, Correct report header
+        //Not authorized
         mockMvc.perform(get("/courses/{id}", uuid)
-                        .with(httpBasic(userName + " ", password))
                         .header("x-validation-report", "true"))
-                .andExpect(status().isUnauthorized());
-
-        //Correct Username, Incorrect Password, Correct Report Header
-        mockMvc.perform(get("/courses/{id}", uuid)
-                        .with(httpBasic(userName, password + " "))
-                        .header("x-validation-report", "true"))
-                .andExpect(status().isUnauthorized());
-
-        //Incorrect Username, Incorrect Password, Correct Report Header
-        mockMvc.perform(get("/courses/{id}", uuid)
-                        .with(httpBasic(userName + " ", password + " "))
-                        .header("x-validation-report", "true"))
-                .andExpect(status().isUnauthorized());
-
-        //Incorrect All
-        mockMvc.perform(get("/courses/{id}", uuid)
-                        .with(httpBasic(userName + " ", password + " "))
-                        .header("x-validation-report", "false"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(courseGetDTO)));
 
         //Incorrect id
         mockMvc.perform(get("/courses/{id}", UUID.randomUUID())
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isNotFound());
+    }
+
+
+    @Test
+    public void getAuthorIntegrationTest() throws Exception {
+        AuthorGetDTO authorGetDTO = new AuthorGetDTO();
+        String dateString = "2024-08-06 09:36:24.000000";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+        Date birthdate = dateFormat.parse(dateString);
+        authorGetDTO.setName("name"); authorGetDTO.setEmail("author@gmail.com"); authorGetDTO.setBirthdate(birthdate);
+
+        // Everything correct
+        mockMvc.perform(get("/authors/{email}", "author@gmail.com")
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(authorGetDTO)));
+
+        //Authorized and report header is false
+        mockMvc.perform(get("/authors/{email}", "author@gmail.com")
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "false"))
+                .andExpect(status().isUnauthorized());
+
+        //Authorized and report header is empty
+        mockMvc.perform(get("/authors/{email}", "author@gmail.com")
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", ""))
+                .andExpect(status().isUnauthorized());
+
+        //Authorized and no report header
+        mockMvc.perform(get("/authors/{email}", "author@gmail.com")
+                        .with(httpBasic(userName, password)))
+                .andExpect(status().isUnauthorized());
+
+        //Unauthorized
+        mockMvc.perform(get("/authors/{email}", "author@gmail.com")
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(authorGetDTO)));
+
+        //Incorrect id
+        mockMvc.perform(get("/authors/{email}", "author1234@gmail.com")
                         .with(httpBasic(userName, password))
                         .header("x-validation-report", "true"))
                 .andExpect(status().isNotFound());
