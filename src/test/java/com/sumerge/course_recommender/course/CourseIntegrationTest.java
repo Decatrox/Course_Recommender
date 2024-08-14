@@ -21,8 +21,7 @@ import org.testcontainers.containers.MySQLContainer;
 import java.util.UUID;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -302,6 +301,64 @@ public class CourseIntegrationTest {
         mockMvc.perform(put("/courses/{id}", UUID.randomUUID())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(coursePostDTO))
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isNotFound());
+    }
+
+
+    @Test
+    public void deleteCourseTest() throws Exception {
+        //Authorized and report header is true
+
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isOk());
+
+        //Authorized and report header is false
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "false"))
+                .andExpect(status().isUnauthorized());
+
+        //Authorized and report header is empty
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", ""))
+                .andExpect(status().isUnauthorized());
+
+        //Authorized and no report header
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName, password)))
+                .andExpect(status().isUnauthorized());
+
+        //Incorrect Username, Correct Password, Correct report header
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName + " ", password))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isUnauthorized());
+
+        //Correct Username, Incorrect Password, Correct Report Header
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName, password + " "))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isUnauthorized());
+
+        //Incorrect Username, Incorrect Password, Correct Report Header
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName + " ", password + " "))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isUnauthorized());
+
+        //Incorrect All
+        mockMvc.perform(delete("/courses/{id}", uuid)
+                        .with(httpBasic(userName + " ", password + " "))
+                        .header("x-validation-report", "false"))
+                .andExpect(status().isUnauthorized());
+
+        //Everything correct but id does not exist
+        mockMvc.perform(delete("/courses/{id}", UUID.randomUUID())
                         .with(httpBasic(userName, password))
                         .header("x-validation-report", "true"))
                 .andExpect(status().isNotFound());
