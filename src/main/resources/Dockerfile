@@ -1,0 +1,10 @@
+FROM mysql:latest
+
+ENV MYSQL_ROOT_PASSWORD=27
+ENV MYSQL_DATABASE=spring-mysql
+ENV MYSQL_USER=Omar
+ENV MYSQL_PASSWORD=Noomy
+
+EXPOSE 3306
+
+VOLUME /var/lib/mysql
