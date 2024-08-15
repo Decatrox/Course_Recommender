@@ -50,7 +50,7 @@ public class CourseService {
             throw new CourseNotFoundException(COURSE_WITH_ID + courseId + DOES_NOT_EXIST);
         }
         if (courseRepository.existsByName(course.getName())
-                && !courseRepository.getById(courseId).getName().equals(course.getName())) {
+                && !courseRepository.getReferenceById(courseId).getName().equals(course.getName())) {
             throw new CourseAlreadyExistsException("Course with the name: " + course.getName() + " already exists");
         }
         Course c = courseRepository.getReferenceById(courseId);

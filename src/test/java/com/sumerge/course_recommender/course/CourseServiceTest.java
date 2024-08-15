@@ -145,7 +145,7 @@ class CourseServiceTest {
 
         when(courseRepository.existsById(id)).thenReturn(true);
         when(courseRepository.existsByName(name)).thenReturn(true);
-        when(courseRepository.getById(id)).thenReturn(courseUpdate);
+        when(courseRepository.getReferenceById(id)).thenReturn(courseUpdate);
         assertThatThrownBy(() -> courseService.updateCourse(id, coursePostDTO))
                 .isInstanceOf(CourseAlreadyExistsException.class);
     }
@@ -195,13 +195,5 @@ class CourseServiceTest {
 
         assertThatThrownBy(() -> courseService.deleteCourse(id))
                 .isInstanceOf(CourseNotFoundException.class);
-    }
-
-    private Course createTestCourse(int num) {
-        Course course = new Course();
-        course.setName("Test Course " + num);
-        course.setDescription("Test Description " + num);
-        course.setCredit(num);
-        return course;
     }
 }
