@@ -1,8 +1,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="com.sumerge.course"
            xmlns="com.sumerge.course"
-           xmlns:basec="com.sumerge.basecourse"
            xmlns:prof="com.sumerge.professor"
+           xmlns:basec="com.sumerge.basecourse"
            elementFormDefault="qualified">
 
     <xs:import namespace="com.sumerge.professor" schemaLocation="Professor.xsd"/>

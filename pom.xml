@@ -217,15 +217,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <inherited>true</inherited>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
                 <version>3.2.0</version>
@@ -238,7 +229,7 @@
                 </executions>
                 <configuration>
                     <sources>
-                        <source>${project.basedir}/src/main/resources</source>
+                        <source>${project.basedir}/src/main/resources/xsd</source>
                     </sources>
                     <outputDirectory>${project.build.directory}/generated-sources/jaxb</outputDirectory>
                     <packageName>com.sumerge.course_recommender</packageName>
