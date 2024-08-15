@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -449,6 +451,20 @@ class IntegrationTests {
                         .header("x-validation-report", "true"))
                 .andExpect(status().isNotFound());
     }
+
+
+//    @Test
+//    void recommendCourseIntegrationTest() throws Exception {
+//        Page<CourseGetDTO> pageCourseGetDTO = new PageImpl<>(new ArrayList<>());
+//
+//        // Everything correct
+//        mockMvc.perform(get("/courses/{id}", uuid)
+//                        .with(httpBasic(userName, password))
+//                        .header("x-validation-report", "true"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(content().json(objectMapper.writeValueAsString(courseGetDTO)));
+//    }
 
 
     @Test
