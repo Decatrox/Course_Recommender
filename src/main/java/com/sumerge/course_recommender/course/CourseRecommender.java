@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 
 
 public interface CourseRecommender {
-    Page<Course> recommendedCourses(int pageNumber);
+    Page<Course> getRecommendedCoursesPage(int pageNumber);
 }

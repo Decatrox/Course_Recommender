@@ -42,7 +42,7 @@ class AuthorControllerTest {
     }
 
     @Test
-    void shouldCallAddAuthorServiceIfValid() throws Exception {
+    void whenAddAuthor_callAddAuthorService_forValidAuthor() throws Exception {
         String dateString = "2024-08-06 09:36:24.000000";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
@@ -61,7 +61,7 @@ class AuthorControllerTest {
     }
 
     @Test
-    void shouldCallAddAuthorServiceWithSameArguments() throws Exception {
+    void whenAddAuthor_callAddAuthorService_withSameArguments() throws Exception {
         String dateString = "2024-08-06 09:36:24.000000";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
@@ -82,7 +82,7 @@ class AuthorControllerTest {
 
 
     @Test
-    void getAuthorByEmail() throws Exception {
+    void whenGetAuthorByEmail_callGetAuthorByEmailService() throws Exception {
         String name = "Author Name"; String email = "author@gmail.com"; Date birthdate = new Date();
         AuthorGetDTO authorGetDTO = new AuthorGetDTO();
         authorGetDTO.setName(name); authorGetDTO.setEmail(email); authorGetDTO.setBirthdate(birthdate);

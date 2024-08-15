@@ -17,7 +17,7 @@ public class CourseRecommenderFun implements CourseRecommender {
 
 
     @Override
-    public Page<Course> recommendedCourses(int pageNumber) {
+    public Page<Course> getRecommendedCoursesPage(int pageNumber) {
             return courseRepository.findAll(PageRequest.of(pageNumber, 2));
         }
 }

@@ -57,13 +57,13 @@ class CourseServiceTest {
         Page<CourseGetDTO> pageDTO = new PageImpl<>(coursesDTO);
         List<Course> courses = Arrays.asList(testCourse, testCourse);
         Page<Course> page = new PageImpl<>(courses);
-        org.mockito.Mockito.when(courseRecommender.recommendedCourses(pageNumber)).thenReturn(page);
+        org.mockito.Mockito.when(courseRecommender.getRecommendedCoursesPage(pageNumber)).thenReturn(page);
         org.mockito.Mockito.when(mapStructMapper.pageCourseToPageCourseGetDTO(page)).thenReturn(pageDTO);
 
         courseService.getRecommendedCourses(pageNumber);
 
         ArgumentCaptor<Integer> pageNumberArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-        verify(courseRecommender).recommendedCourses(pageNumberArgumentCaptor.capture());
+        verify(courseRecommender).getRecommendedCoursesPage(pageNumberArgumentCaptor.capture());
         int queriedPageNumber = pageNumberArgumentCaptor.getValue();
 
         assertThat(queriedPageNumber).isEqualTo(pageNumber);
@@ -74,7 +74,7 @@ class CourseServiceTest {
     void itShouldThrowExceptionWhenPageDoesNotExist() {
         Page<CourseGetDTO> pageDTO = Page.empty();
         Page<Course> page = Page.empty();
-        when(courseRecommender.recommendedCourses(1)).thenReturn(page);
+        when(courseRecommender.getRecommendedCoursesPage(1)).thenReturn(page);
         when(mapStructMapper.pageCourseToPageCourseGetDTO(page)).thenReturn(pageDTO);
         assertThatThrownBy(() -> courseService.getRecommendedCourses(1))
                 .isInstanceOf(PageNotFoundException.class);

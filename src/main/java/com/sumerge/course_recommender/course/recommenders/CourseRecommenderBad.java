@@ -14,7 +14,7 @@ public class CourseRecommenderBad implements CourseRecommender {
     private final CourseRepository courseRepository;
 
     @Override
-    public Page<Course> recommendedCourses(int pageNumber) {
+    public Page<Course> getRecommendedCoursesPage(int pageNumber) {
         return courseRepository.findAll(PageRequest.of(pageNumber, 3));
     }
 }

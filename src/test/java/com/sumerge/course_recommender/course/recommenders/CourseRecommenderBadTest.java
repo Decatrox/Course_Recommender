@@ -24,21 +24,21 @@ class CourseRecommenderBadTest {
     private CourseRepository courseRepository;
 
     @Test
-    void getsRecommendedCoursesBad() {
+    void whenGetRecommendedCoursesPage_callCourseRepositoryFindAll() {
         CourseRecommenderBad courseRecommenderBad = new CourseRecommenderBad(courseRepository);
         int pageNumber = 1;
-        Page<Course> page = getCourses(pageNumber);
+        Page<Course> page = createCourses(pageNumber);
         Pageable pageable = PageRequest.of(pageNumber, 3);
         when(courseRepository.findAll(pageable)).thenReturn(page);
 
-        Page<Course> returnedPage = courseRecommenderBad.recommendedCourses(pageNumber);
+        Page<Course> returnedPage = courseRecommenderBad.getRecommendedCoursesPage(pageNumber);
 
         assertThat(returnedPage).isEqualTo(page);
 
     }
 
 
-    private static Page<Course> getCourses(int pageNumber) {
+    private static Page<Course> createCourses(int pageNumber) {
         Course testCourse = new Course();
         Course testCourse2 = new Course();
         String name = "Test Course";

@@ -27,7 +27,7 @@ class AuthorServiceTest {
     private AuthorRepository authorRepository;
 
     @Test
-    void itShouldAddAuthor() {
+    void whenAddAuthor_callRepositoryAddAuthor_ifValidAuthor() {
         String name = "Author Name"; String email = "author@gmail.com"; Date birthdate = new Date();
         AuthorPostDTO authorPostDTO = new AuthorPostDTO();
         Author author = new Author();
@@ -46,7 +46,7 @@ class AuthorServiceTest {
     }
 
     @Test
-    void itShouldNotAddDuplicateAuthor() {
+    void whenAddAuthor_throwAlreadyExistsException_ifAuthorAlreadyExists() {
         AuthorPostDTO authorPostDTO = new AuthorPostDTO();
         String email = "author@gmail.com";
         authorPostDTO.setEmail(email);
@@ -57,7 +57,7 @@ class AuthorServiceTest {
     }
 
     @Test
-    void itShouldGetAuthorByEmail() {
+    void whenGetAuthorByEmail_callRepositoryGetAuthor_ifValidAuthor() {
         String name = "Author Name"; String email = "Author Email"; Date birthdate = new Date();
         Author author = new Author();
         AuthorGetDTO authorGetDTO = new AuthorGetDTO();

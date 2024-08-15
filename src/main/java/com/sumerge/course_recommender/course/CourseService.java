@@ -27,7 +27,7 @@ public class CourseService {
 
     public Page<CourseGetDTO> getRecommendedCourses(int pageNumber) {
         log.info("CourseService-Get recommended courses");
-        Page<CourseGetDTO> page = mapStructMapper.pageCourseToPageCourseGetDTO(courseRecommender.recommendedCourses(pageNumber));
+        Page<CourseGetDTO> page = mapStructMapper.pageCourseToPageCourseGetDTO(courseRecommender.getRecommendedCoursesPage(pageNumber));
 
         if (!page.hasContent()){
             throw new PageNotFoundException("Page: " + pageNumber + " Not Found");
