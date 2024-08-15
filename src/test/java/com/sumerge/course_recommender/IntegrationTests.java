@@ -21,6 +21,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -30,7 +32,9 @@ import org.testcontainers.containers.MySQLContainer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
@@ -65,6 +69,10 @@ class IntegrationTests {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     private final ObjectMapper objectMapper = new ObjectMapper()
             .setDateFormat(dateFormat);
+
+    private Course course = new Course();
+    private Course courseUnique = new Course();
+
 
     static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest");
 
@@ -106,13 +114,11 @@ class IntegrationTests {
     @BeforeEach
     public void setUp() {
         courseRepository.deleteAll();
-        Course course = new Course();
         course.setName("course"); course.setDescription("course");
         course.setCredit(6);
         courseRepository.save(course);
         uuid = courseRepository.findAll().getFirst().getId();
 
-        Course courseUnique = new Course();
         courseUnique.setName("course unique"); courseUnique.setDescription("course unique");
         courseUnique.setCredit(6);
         courseRepository.save(courseUnique);
@@ -453,18 +459,58 @@ class IntegrationTests {
     }
 
 
-//    @Test
-//    void recommendCourseIntegrationTest() throws Exception {
-//        Page<CourseGetDTO> pageCourseGetDTO = new PageImpl<>(new ArrayList<>());
-//
-//        // Everything correct
-//        mockMvc.perform(get("/courses/{id}", uuid)
-//                        .with(httpBasic(userName, password))
-//                        .header("x-validation-report", "true"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(content().json(objectMapper.writeValueAsString(courseGetDTO)));
-//    }
+    @Test
+    void recommendCourseIntegrationTest() throws Exception {
+        CourseGetDTO courseGetDTO = new CourseGetDTO();
+        CourseGetDTO courseGetDTO2 = new CourseGetDTO();
+        courseGetDTO.setName(course.getName()); courseGetDTO.setDescription(course.getDescription());
+        courseGetDTO.setCredit(course.getCredit());
+        courseGetDTO2.setName(courseUnique.getName()); courseGetDTO2.setDescription(courseUnique.getDescription());
+        courseGetDTO2.setCredit(courseUnique.getCredit());
+
+        List<CourseGetDTO> courseGetDTOList = new ArrayList<>();
+        courseGetDTOList.add(courseGetDTO);
+        courseGetDTOList.add(courseGetDTO2);
+        Pageable pageable = PageRequest.of(0, 2);
+        Page<CourseGetDTO> pageCourseGetDTO = new PageImpl<>(courseGetDTOList, pageable, 2);
+
+        // Everything correct
+        mockMvc.perform(get("/courses/paged/0")
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(pageCourseGetDTO)));
+
+        //Authorized and report header is false
+        mockMvc.perform(get("/courses/paged/0")
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "false"))
+                .andExpect(status().isUnauthorized());
+
+        //Authorized and report header is empty
+        mockMvc.perform(get("/courses/paged/0")
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", ""))
+                .andExpect(status().isUnauthorized());
+
+        //Authorized and no report header
+        mockMvc.perform(get("/courses/paged/0")
+                        .with(httpBasic(userName, password)))
+                .andExpect(status().isUnauthorized());
+
+        //Not authorized
+        mockMvc.perform(get("/courses/paged/0")
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(pageCourseGetDTO)));
+
+        //Page doesn't exist
+        mockMvc.perform(get("/courses/paged/99")
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isNotFound());
+    }
 
 
     @Test
