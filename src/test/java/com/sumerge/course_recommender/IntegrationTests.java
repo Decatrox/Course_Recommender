@@ -12,6 +12,7 @@ import com.sumerge.course_recommender.course.CoursePostDTO;
 import com.sumerge.course_recommender.course.CourseRepository;
 import com.sumerge.course_recommender.user.AppUser;
 import com.sumerge.course_recommender.user.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,14 +56,13 @@ class IntegrationTests {
     private final String userName = "test username";
     private final String password = "test password";
     private UUID uuid;
-    private static UUID authorUUID;
-    private static final String dateString = "2024-08-06 09:36:24.000";
+    private static final String DATE_STRING = "2024-08-06 09:36:24.000";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     private final ObjectMapper objectMapper = new ObjectMapper()
             .setDateFormat(dateFormat);
 
-    private Course course = new Course();
-    private Course courseUnique = new Course();
+    private final Course course = new Course();
+    private final Course courseUnique = new Course();
 
 
     static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest");
@@ -89,11 +89,11 @@ class IntegrationTests {
         appUser.setPassword(bCryptPasswordEncoder.encode("test password"));
         userRepository.save(appUser);
 
-        Date birthdate = dateFormat.parse(dateString);
+        Date birthdate = dateFormat.parse(DATE_STRING);
         Author author = new Author();
         author.setName("name"); author.setEmail("author@gmail.com"); author.setBirthdate(birthdate);
         authorRepository.save(author);
-        authorUUID = authorRepository.findAll().getFirst().getId();
+        UUID authorUUID = authorRepository.findAll().getFirst().getId();
         System.out.println("Omar" + authorRepository.existsById(authorUUID));
     }
 
@@ -452,16 +452,7 @@ class IntegrationTests {
 
     @Test
     void recommendCourseIntegrationTest() throws Exception {
-        CourseGetDTO courseGetDTO = new CourseGetDTO();
-        CourseGetDTO courseGetDTO2 = new CourseGetDTO();
-        courseGetDTO.setName(course.getName()); courseGetDTO.setDescription(course.getDescription());
-        courseGetDTO.setCredit(course.getCredit());
-        courseGetDTO2.setName(courseUnique.getName()); courseGetDTO2.setDescription(courseUnique.getDescription());
-        courseGetDTO2.setCredit(courseUnique.getCredit());
-
-        List<CourseGetDTO> courseGetDTOList = new ArrayList<>();
-        courseGetDTOList.add(courseGetDTO);
-        courseGetDTOList.add(courseGetDTO2);
+        List<CourseGetDTO> courseGetDTOList = getCourseGetDTOS();
         Pageable pageable = PageRequest.of(0, 2);
         Page<CourseGetDTO> pageCourseGetDTO = new PageImpl<>(courseGetDTOList, pageable, 2);
 
@@ -503,12 +494,28 @@ class IntegrationTests {
                 .andExpect(status().isNotFound());
     }
 
+    private @NotNull List<CourseGetDTO> getCourseGetDTOS() {
+        CourseGetDTO courseGetDTO = new CourseGetDTO();
+        CourseGetDTO courseGetDTO2 = new CourseGetDTO();
+        courseGetDTO.setName(course.getName());
+        courseGetDTO.setDescription(course.getDescription());
+        courseGetDTO.setCredit(course.getCredit());
+        courseGetDTO2.setName(courseUnique.getName());
+        courseGetDTO2.setDescription(courseUnique.getDescription());
+        courseGetDTO2.setCredit(courseUnique.getCredit());
+
+        List<CourseGetDTO> courseGetDTOList = new ArrayList<>();
+        courseGetDTOList.add(courseGetDTO);
+        courseGetDTOList.add(courseGetDTO2);
+        return courseGetDTOList;
+    }
+
 
     @Test
     void getAuthorIntegrationTest() throws Exception {
         AuthorGetDTO authorGetDTO = new AuthorGetDTO();
 
-        Date birthdate = dateFormat.parse(dateString);
+        Date birthdate = dateFormat.parse(DATE_STRING);
         authorGetDTO.setName("name"); authorGetDTO.setEmail("author@gmail.com"); authorGetDTO.setBirthdate(birthdate);
 
         // Everything correct
@@ -553,7 +560,7 @@ class IntegrationTests {
 
     @Test
     void addAuthorIntegrationTest() throws Exception {
-        Date birthdate = dateFormat.parse(dateString);
+        Date birthdate = dateFormat.parse(DATE_STRING);
         AuthorPostDTO authorPostDTO = new AuthorPostDTO();
         authorPostDTO.setName("name"); authorPostDTO.setEmail("author2@gmail.com"); authorPostDTO.setBirthdate(birthdate);
 
