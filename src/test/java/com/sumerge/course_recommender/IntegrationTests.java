@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class IntegrationTests {
+class IntegrationTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,14 +52,17 @@ public class IntegrationTests {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+
 
 
     private final String userName = "test username";
     private final String password = "test password";
     private UUID uuid;
     private static UUID authorUUID;
-
+    private static final String dateString = "2024-08-06 09:36:24.000";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private final ObjectMapper objectMapper = new ObjectMapper()
+            .setDateFormat(dateFormat);
 
     static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest");
 
@@ -85,8 +88,6 @@ public class IntegrationTests {
         appUser.setPassword(bCryptPasswordEncoder.encode("test password"));
         userRepository.save(appUser);
 
-        String dateString = "2024-08-06 09:36:24.000000";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
         Date birthdate = dateFormat.parse(dateString);
         Author author = new Author();
         author.setName("name"); author.setEmail("author@gmail.com"); author.setBirthdate(birthdate);
@@ -405,7 +406,7 @@ public class IntegrationTests {
     }
 
     @Test
-    public void getCourseIntegrationTest() throws Exception {
+    void getCourseIntegrationTest() throws Exception {
         CourseGetDTO courseGetDTO = new CourseGetDTO();
         courseGetDTO.setName("course");
         courseGetDTO.setDescription("course");
@@ -451,10 +452,9 @@ public class IntegrationTests {
 
 
     @Test
-    public void getAuthorIntegrationTest() throws Exception {
+    void getAuthorIntegrationTest() throws Exception {
         AuthorGetDTO authorGetDTO = new AuthorGetDTO();
-        String dateString = "2024-08-06 09:36:24.000000";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+
         Date birthdate = dateFormat.parse(dateString);
         authorGetDTO.setName("name"); authorGetDTO.setEmail("author@gmail.com"); authorGetDTO.setBirthdate(birthdate);
 
@@ -500,8 +500,6 @@ public class IntegrationTests {
 
     @Test
     void addAuthorIntegrationTest() throws Exception {
-        String dateString = "2024-08-06 09:36:24.000000";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
         Date birthdate = dateFormat.parse(dateString);
         AuthorPostDTO authorPostDTO = new AuthorPostDTO();
         authorPostDTO.setName("name"); authorPostDTO.setEmail("author2@gmail.com"); authorPostDTO.setBirthdate(birthdate);
