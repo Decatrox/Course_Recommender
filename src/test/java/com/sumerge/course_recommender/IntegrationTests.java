@@ -50,16 +50,7 @@ class IntegrationTests {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private CourseRepository courseRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-
 
     private final String userName = "test username";
     private final String password = "test password";
