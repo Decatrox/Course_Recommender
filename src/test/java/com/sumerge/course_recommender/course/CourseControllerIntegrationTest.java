@@ -1,12 +1,8 @@
-package com.sumerge.course_recommender;
+package com.sumerge.course_recommender.course;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sumerge.course_recommender.course.Course;
-import com.sumerge.course_recommender.course.CourseGetDTO;
-import com.sumerge.course_recommender.course.CoursePostDTO;
-import com.sumerge.course_recommender.course.CourseRepository;
+import com.sumerge.course_recommender.MasterIntegrationTest;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class CourseControllerIntegrationTest {
+class CourseControllerIntegrationTest extends MasterIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -67,10 +63,6 @@ public class CourseControllerIntegrationTest {
         courseRepository.save(courseUnique);
     }
 
-    @AfterAll
-    static void afterAll() {
-        UserControllerIntegrationTest.mySQLContainer.stop();
-    }
 
     @Test
     void addCourseIntegrationTest() throws Exception {

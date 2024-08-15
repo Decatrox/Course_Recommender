@@ -1,10 +1,7 @@
-package com.sumerge.course_recommender;
+package com.sumerge.course_recommender.author;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sumerge.course_recommender.author.Author;
-import com.sumerge.course_recommender.author.AuthorGetDTO;
-import com.sumerge.course_recommender.author.AuthorPostDTO;
-import com.sumerge.course_recommender.author.AuthorRepository;
+import com.sumerge.course_recommender.MasterIntegrationTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,7 +22,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class AuthorControllerIntegrationTest {
+class AuthorControllerIntegrationTest extends MasterIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,7 +40,6 @@ public class AuthorControllerIntegrationTest {
         Author author = new Author();
         author.setName("name"); author.setEmail("author@gmail.com"); author.setBirthdate(birthdate);
         authorRepository.save(author);
-        UUID authorUUID = authorRepository.findAll().getFirst().getId();
     }
 
 
