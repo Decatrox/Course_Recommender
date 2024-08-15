@@ -656,7 +656,44 @@ class IntegrationTests {
                         .with(httpBasic(userName, password))
                         .header("x-validation-report", "true"))
                 .andExpect(status().isBadRequest());
+    }
 
+    @Test
+    void registerUserIntegrationTest() throws Exception {
+        AppUser appUser = new AppUser();
+        appUser.setUserName("new name");
+        appUser.setPassword("new password");
+
+        //Everything
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appUser))
+                        .with(httpBasic(userName, password))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isOk());
+
+        //Not Authenticated, Everything Correct
+        appUser.setUserName("new username 2");
+        mockMvc.perform(post("/users")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(appUser))
+                    .header("x-validation-report", "true"))
+                .andExpect(status().isOk());
+
+        //No Report Header
+        appUser.setUserName("new username 3");
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appUser)))
+                .andExpect(status().isUnauthorized());
+
+        //Duplicate username
+        appUser.setUserName(userName);
+        mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(appUser))
+                        .header("x-validation-report", "true"))
+                .andExpect(status().isConflict());
     }
 
 }
