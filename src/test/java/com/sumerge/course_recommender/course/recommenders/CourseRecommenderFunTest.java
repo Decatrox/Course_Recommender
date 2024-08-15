@@ -20,16 +20,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CourseRecommenderFunTest {
 
-    private CourseRecommenderFun courseRecommenderFun;
-
     @Mock
     private CourseRepository courseRepository;
 
     @Test
     void getsRecommendedCourses() {
-        courseRecommenderFun = new CourseRecommenderFun(courseRepository);
+        CourseRecommenderFun courseRecommenderFun = new CourseRecommenderFun(courseRepository);
         int pageNumber = 1;
-//        Page<Course> page = getCourses();
         Page<Course> page = getCourses(pageNumber);
         Pageable pageable = PageRequest.of(pageNumber, 2);
         when(courseRepository.findAll(pageable)).thenReturn(page);
@@ -57,7 +54,6 @@ class CourseRecommenderFunTest {
 
         List<Course> courses = Arrays.asList(testCourse, testCourse2);
         Pageable pageable = PageRequest.of(pageNumber, 2);
-        Page<Course> page = new PageImpl<>(courses, pageable, courses.size());
-        return page;
+        return new PageImpl<>(courses, pageable, courses.size());
     }
 }

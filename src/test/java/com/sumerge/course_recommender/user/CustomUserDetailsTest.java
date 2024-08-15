@@ -14,11 +14,10 @@ class CustomUserDetailsTest {
     private CustomUserDetails customUserDetails;
     private String testUserName;
     private String testPassword;
-    private AppUser user;
 
     @BeforeEach
     void setUpBeforeClass() {
-        user = new AppUser();
+        AppUser user = new AppUser();
         testUserName = "testUser";
         testPassword = "testPassword";
         user.setUserName(testUserName);

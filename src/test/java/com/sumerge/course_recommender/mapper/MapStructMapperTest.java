@@ -131,8 +131,8 @@ class MapStructMapperTest {
     @Test
     void itShouldMapPageCourseToPageCourseGetDTO() {
         Course testCourse = new Course();
-        String name = "Test Course"; String Description = "Test Description"; int credit = 8;
-        testCourse.setName(name); testCourse.setDescription(Description); testCourse.setCredit(credit);
+        String name = "Test Course"; String description = "Test Description"; int credit = 8;
+        testCourse.setName(name); testCourse.setDescription(description); testCourse.setCredit(credit);
         List<Course> courses = Arrays.asList(testCourse, testCourse);
         Pageable pageable = PageRequest.of(0, 2);
         Page<Course> coursePage = new PageImpl<>(courses, pageable, courses.size());
