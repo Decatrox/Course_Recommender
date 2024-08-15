@@ -1,0 +1,22 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="com.sumerge.course"
+           xmlns="com.sumerge.course"
+           xmlns:basec="com.sumerge.basecourse"
+           xmlns:prof="com.sumerge.professor"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="com.sumerge.professor" schemaLocation="Professor.xsd"/>
+    <xs:import namespace="com.sumerge.basecourse" schemaLocation="BaseCourse.xsd"/>
+
+    <xs:complexType name="Course">
+        <xs:complexContent>
+            <xs:extension base="basec:BaseCourse">
+                <xs:sequence>
+                    <xs:element name="professor" type="prof:Professor"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Course" type="Course"/>
+</xs:schema>

@@ -1,0 +1,13 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="com.sumerge.basecourse"
+           xmlns="com.sumerge.basecourse"
+           elementFormDefault="qualified">
+
+    <xs:complexType name="BaseCourse">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="description"/>
+            <xs:element type="xs:string" name="credit"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,12 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="com.sumerge.professor"
+           xmlns="com.sumerge.professor"
+           elementFormDefault="qualified">
+
+    <xs:complexType name="Professor">
+        <xs:sequence>
+            <xs:element type="xs:string" name="firstName"/>
+            <xs:element type="xs:string" name="lastName"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
