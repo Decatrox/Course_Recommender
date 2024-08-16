@@ -1,0 +1,76 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="com.sumerge.course"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="com.sumerge.course">
+
+  <types>
+    <xsd:schema targetNamespace="com.sumerge.course"
+                xmlns="com.sumerge.course"
+                xmlns:prof="com.sumerge.professor"
+                xmlns:basec="com.sumerge.basecourse"
+                elementFormDefault="qualified">
+      <xsd:import namespace="com.sumerge.professor" schemaLocation="Professor.xsd"/>
+      <xsd:import namespace="com.sumerge.basecourse" schemaLocation="BaseCourse.xsd"/>
+
+      <xsd:complexType name="Course">
+        <xsd:complexContent>
+          <xsd:extension base="basec:BaseCourse">
+            <xsd:sequence>
+              <xsd:element name="professor" type="prof:Professor"/>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:element name="Course" type="Course"/>
+      <xsd:element name="getCourseRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="courseId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getCourseResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Course" type="tns:Course"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="getCourseRequest">
+    <part name="parameters" element="tns:getCourseRequest"/>
+  </message>
+  <message name="getCourseResponse">
+    <part name="parameters" element="tns:getCourseResponse"/>
+  </message>
+
+  <portType name="CourseServicePortType">
+    <operation name="getCourse">
+      <input message="tns:getCourseRequest"/>
+      <output message="tns:getCourseResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="CourseServiceBinding" type="tns:CourseServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getCourse">
+      <soap:operation soapAction="com.sumerge.course/getCourse"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="CourseService">
+    <port name="CourseServicePort" binding="tns:CourseServiceBinding">
+      <soap:address location="http://localhost:8080/mockCourseService"/>
+    </port>
+  </service>
+</definitions>
