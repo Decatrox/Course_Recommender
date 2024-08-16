@@ -1,6 +1,7 @@
 package com.sumerge.course_recommender.course;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ws.client.core.WebServiceTemplate;
 
 @Service
 public class CourseSOAPBonus {
