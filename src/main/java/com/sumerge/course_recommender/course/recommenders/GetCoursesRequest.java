@@ -17,19 +17,19 @@ public class GetCoursesRequest {
 
     private String name;
 
-    public GetCoursesRequest() {
-    }
-
-    public GetCoursesRequest(String name) {
-        this.name = name;
-    }
-
-    @XmlElement(required = true)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public GetCoursesRequest() {
+//    }
+//
+//    public GetCoursesRequest(String name) {
+//        this.name = name;
+//    }
+//
+//    @XmlElement(required = true)
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 }

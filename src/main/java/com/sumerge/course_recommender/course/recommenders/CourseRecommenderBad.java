@@ -28,7 +28,7 @@ public class CourseRecommenderBad implements CourseRecommender {
     @Override
     public Page<com.sumerge.course_recommender.course.Course> getRecommendedCoursesPage(int pageNumber) {
         GetCoursesRequest request = new GetCoursesRequest();
-        request.setName("name");
+//        request.setName("name");
 
         // Call the SOAP service to get the response
         GetCoursesResponse response = (GetCoursesResponse) webServiceTemplate.marshalSendAndReceive(
@@ -41,10 +41,12 @@ public class CourseRecommenderBad implements CourseRecommender {
                 .map(mapStructMapper::courseRecommenderToCourse)
                 .collect(Collectors.toList());
 
-        int start = Math.min((int) PageRequest.of(pageNumber, 3).getOffset(), courses.size());
-        int end = Math.min((start + 3), courses.size());
-        List<com.sumerge.course_recommender.course.Course> pageContent = courses.subList(start, end);
+//        int start = Math.min((int) PageRequest.of(pageNumber, 3).getOffset(), courses.size());
+//        int end = Math.min((start + 3), courses.size());
+//        List<com.sumerge.course_recommender.course.Course> pageContent = courses.subList(start, end);
 
-        return new PageImpl<>(pageContent, PageRequest.of(pageNumber, 3), courses.size());
+//        return new PageImpl<>(pageContent, PageRequest.of(pageNumber, 3), courses.size());
+        return new PageImpl<>(courses, PageRequest.of(pageNumber, 3), courses.size());
+
     }
 }
