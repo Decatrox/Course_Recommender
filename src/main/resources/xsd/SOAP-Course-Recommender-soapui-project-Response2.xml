@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="com.sumerge.course-wsdl">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <tns:GetCoursesResponse>
+            <tns:Course>
+                <tns:name>Optimization Techniques</tns:name>
+                <tns:description>Fun Algorithms for Optimzing Problems that are impossible to optimize with normal techniques</tns:description>
+                <tns:credit>4</tns:credit>
+                <tns:professor>
+                    <prof:firstName xmlns:prof="com.sumerge.professor">Omar</prof:firstName>
+                    <prof:lastName xmlns:prof="com.sumerge.professor">Shehata</prof:lastName>
+                </tns:professor>
+            </tns:Course>
+            <tns:Course>
+                <tns:name>HCI</tns:name>
+                <tns:description>UI/UX, AR Project, Fun</tns:description>
+                <tns:credit>4</tns:credit>
+                <tns:professor>
+                    <prof:firstName xmlns:prof="com.sumerge.professor">Wael</prof:firstName>
+                    <prof:lastName xmlns:prof="com.sumerge.professor">Aboelsaadat</prof:lastName>
+                </tns:professor>
+            </tns:Course>
+            <tns:Course>
+                <tns:name>Scalable</tns:name>
+                <tns:description>Microservices architecture, scaling applications</tns:description>
+                <tns:credit>4</tns:credit>
+                <tns:professor>
+                    <prof:firstName xmlns:prof="com.sumerge.professor">Wael</prof:firstName>
+                    <prof:lastName xmlns:prof="com.sumerge.professor">Aboelsaadat</prof:lastName>
+                </tns:professor>
+            </tns:Course>
+        </tns:GetCoursesResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -163,17 +163,31 @@
             <artifactId>jaxws-maven-plugin</artifactId>
             <version>4.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
 
         <!--        <dependency>-->
 <!--            <groupId>wsdl4j</groupId>-->
 <!--            <artifactId>wsdl4j</artifactId>-->
 <!--        </dependency>-->
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.ws/spring-ws-core &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ws</groupId>-->
-<!--            <artifactId>spring-ws-core</artifactId>-->
-<!--            <version>4.0.11</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+            <version>4.0.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.3</version>
+        </dependency>
 
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.ws</groupId>-->
@@ -284,7 +298,7 @@
 <!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/Course.xsd</bindingFile>-->
 <!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/BaseCourse.xsd</bindingFile>-->
 <!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/Professor.xsd</bindingFile>-->
-                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/GetCoursesRequest.xsd</bindingFile>
+<!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/GetCoursesRequest.xsd</bindingFile>-->
                         <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/GetCoursesResponse.xsd</bindingFile>
 
                     </bindingFiles>

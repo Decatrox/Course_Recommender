@@ -1,0 +1,36 @@
+package com.sumerge.course_recommender.course.recommenders;
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+
+@Configuration
+public class SoapClientConfig {
+
+    @Bean
+    public Jaxb2Marshaller marshaller() {
+        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        // Point to the package containing your generated classes
+//        marshaller.setPackagesToScan("com.sumerge.course_recommender.course.recommenders");
+//        marshaller.setContextPath("com.sumerge.course_recommender.course.recommenders");
+        marshaller.setClassesToBeBound(GetCoursesRequest.class, GetCoursesResponse.class);
+        return marshaller;
+    }
+
+    @Bean
+    public WebServiceTemplate webServiceTemplate(Jaxb2Marshaller marshaller) {
+        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(marshaller);
+        webServiceTemplate.setUnmarshaller(marshaller);
+        webServiceTemplate.setMessageSender(new HttpComponentsMessageSender());
+        return webServiceTemplate;
+    }
+
+    @Bean(name = "courseServiceSoap")
+    public CourseService courseService(WebServiceTemplate webServiceTemplate) {
+        return new CourseService();
+    }
+}

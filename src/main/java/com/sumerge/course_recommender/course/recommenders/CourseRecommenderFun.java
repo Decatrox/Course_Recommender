@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-@Primary
+//@Primary
 @Component
 @AllArgsConstructor
 public class CourseRecommenderFun implements CourseRecommender {

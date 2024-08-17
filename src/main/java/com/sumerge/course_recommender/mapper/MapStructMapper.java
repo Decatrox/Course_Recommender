@@ -6,6 +6,8 @@ import com.sumerge.course_recommender.author.AuthorPostDTO;
 import com.sumerge.course_recommender.course.Course;
 import com.sumerge.course_recommender.course.CourseGetDTO;
 import com.sumerge.course_recommender.course.CoursePostDTO;
+import com.sumerge.course_recommender.course.CourseRecommender;
+import com.sumerge.course_recommender.course.recommenders.GetCoursesResponse;
 import com.sumerge.course_recommender.user.AppUser;
 import com.sumerge.course_recommender.user.UserPostDTO;
 import org.mapstruct.Mapper;
@@ -24,6 +26,7 @@ public interface MapStructMapper {
     Course coursePostDTOToCourse(CoursePostDTO coursePostDTO);
     AuthorGetDTO authorToAuthorGetDTO(Author author);
     Author authorPostDTOToAuthor(AuthorPostDTO authorPostDTO);
+    Course courseRecommenderToCourse (GetCoursesResponse.Course course);
 
     @Mapping(source = "userName", target = "userName")
     @Mapping(source = "password", target = "password")
