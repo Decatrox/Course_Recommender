@@ -157,21 +157,38 @@
             <artifactId>jaxb2-maven-plugin</artifactId>
             <version>3.2.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-maven-plugin -->
         <dependency>
-            <groupId>wsdl4j</groupId>
-            <artifactId>wsdl4j</artifactId>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-maven-plugin</artifactId>
+            <version>4.0.3</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.ws/spring-ws-core -->
-        <dependency>
-            <groupId>org.springframework.ws</groupId>
-            <artifactId>spring-ws-core</artifactId>
-            <version>4.0.11</version>
-        </dependency>
+
+        <!--        <dependency>-->
+<!--            <groupId>wsdl4j</groupId>-->
+<!--            <artifactId>wsdl4j</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.ws/spring-ws-core &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ws</groupId>-->
+<!--            <artifactId>spring-ws-core</artifactId>-->
+<!--            <version>4.0.11</version>-->
+<!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.ws</groupId>-->
 <!--            <artifactId>spring-ws-support</artifactId>-->
 <!--        </dependency>-->
+<!--&lt;!&ndash;        <dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;            <groupId>com.sun.xml.ws</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;            <artifactId>jaxws-rt</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;        </dependency>&ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>javax.xml.ws</groupId>-->
+<!--                <artifactId>jaxws-api</artifactId>-->
+<!--                <version>2.3.1</version>-->
+<!--            </dependency>-->
+
 
     </dependencies>
 
@@ -242,10 +259,38 @@
                 </executions>
                 <configuration>
                     <sources>
-                        <source>${project.basedir}/src/main/resources/xsd</source>
+                        <source>${project.basedir}/src/main/resources/xsd/xsd_inside</source>
                     </sources>
                     <outputDirectory>${project.build.directory}/generated-sources/jaxb</outputDirectory>
                     <packageName>com.sumerge.course_recommender</packageName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>4.0.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wsdlUrls>
+                        <wsdlUrl>http://localhost:8088/courseSOAPServiceMock?wsdl</wsdlUrl>
+                    </wsdlUrls>
+                    <bindingFiles>
+<!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/Course.xsd</bindingFile>-->
+<!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/BaseCourse.xsd</bindingFile>-->
+<!--                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/Professor.xsd</bindingFile>-->
+                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/GetCoursesRequest.xsd</bindingFile>
+                        <bindingFile>${basedir}/src/main/resources/xsd/xsd_inside/GetCoursesResponse.xsd</bindingFile>
+
+                    </bindingFiles>
+                    <packageName>com.sumerge.course_recommender.course.recommenders</packageName>
+                    <sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+                    <destDir>${basedir}/target/classes</destDir>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,3 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="com.sumerge.course-wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="GetCoursesRequest" type="xs:string"/>
+</xs:schema>

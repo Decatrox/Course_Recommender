@@ -1,0 +1,55 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="com.sumerge.course-wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="com.sumerge.course-wsdl"
+             name="CourseService">
+
+    <!-- 1. Types -->
+    <types>
+        <xsd:schema>
+            <xsd:import namespace="com.sumerge.course" schemaLocation="xsd_inside/Course.xsd"/>
+            <xsd:import namespace="com.sumerge.professor" schemaLocation="xsd_inside/Professor.xsd"/>
+            <xsd:import namespace="com.sumerge.basecourse" schemaLocation="xsd_inside/BaseCourse.xsd"/>
+            <xsd:import namespace="com.sumerge.course-wsdl" schemaLocation="xsd_inside/GetCoursesRequest.xsd"/>
+            <xsd:import namespace="com.sumerge.course-wsdl" schemaLocation="xsd_inside/GetCoursesResponse.xsd"/>
+        </xsd:schema>
+    </types>
+
+    <!-- 2. Message Definitions -->
+    <message name="GetCoursesRequest">
+        <part name="parameters" element="tns:GetCoursesRequest"/>
+    </message>
+    <message name="GetCoursesResponse">
+        <part name="parameters" element="tns:GetCoursesResponse"/>
+    </message>
+
+    <!-- 3. PortType Definition -->
+    <portType name="CoursePortType">
+        <operation name="getCourses">
+            <input message="tns:GetCoursesRequest"/>
+            <output message="tns:GetCoursesResponse"/>
+        </operation>
+    </portType>
+
+    <!-- 4. Binding Definition -->
+    <binding name="CourseBinding" type="tns:CoursePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getCourses">
+            <soap:operation soapAction="com/sumerge/course-wsdl/getCourses"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- 5. Service Definition -->
+    <service name="CourseService">
+        <port name="CoursePort" binding="tns:CourseBinding">
+            <soap:address location="http://localhost:8080/CourseServiceSOAP"/>
+        </port>
+    </service>
+</definitions>
