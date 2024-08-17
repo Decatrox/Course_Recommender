@@ -13,7 +13,6 @@ public class SoapClientConfig {
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        // Point to the package containing your generated classes
 //        marshaller.setPackagesToScan("com.sumerge.course_recommender.course.recommenders");
 //        marshaller.setContextPath("com.sumerge.course_recommender.course.recommenders");
         marshaller.setClassesToBeBound(GetCoursesRequest.class, GetCoursesResponse.class);
